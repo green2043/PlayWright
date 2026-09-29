@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Inner Frame</title>
+  <link rel="stylesheet" href="../css/styles.css" />
+</head>
+<body>
+  <div class="card" style="margin:1rem;">
+    <h3>I am inside a single iframe</h3>
+    <input type="text" placeholder="Type inside iframe" data-testid="iframe-input" />
+    <button data-testid="iframe-button" onclick="document.getElementById('iframeMsg').textContent='Button clicked inside iframe!'">Click me</button>
+    <p id="iframeMsg" data-testid="iframe-message"></p>
+  </div>
+</body>
+</html>

@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Advanced Elements - Playwright Practice App</title>
+  <link rel="stylesheet" href="../css/styles.css" />
+</head>
+<body>
+  <header class="app-header"><h1>🎭 Playwright Practice App</h1></header>
+  <nav class="main-nav" aria-label="Main navigation">
+    <a href="index.html">Home</a>
+    <a href="forms.html">Forms</a>
+    <a href="tables.html">Tables</a>
+    <a href="popups.html">Popups &amp; Dialogs</a>
+    <a href="iframes.html">iFrames</a>
+    <a href="dynamic.html">Dynamic Content</a>
+    <a href="shadow-dom.html">Shadow DOM</a>
+    <a href="locators.html">Locator Playground</a>
+    <a href="file-upload.html">Files</a>
+    <a href="child/child-page-1.html" target="_blank" rel="noopener">Child Pages</a>
+    <a href="api-playground.html">API Playground</a>
+    <a href="advanced.html" aria-current="page">Advanced Elements</a>
+  </nav>
+
+  <main class="container">
+    <section class="card">
+      <h2>📡 Real-Time Live Data (Server-Sent Events)</h2>
+      <p>Connects to <code>GET /api/misc/live-stream</code> and receives a new "price tick" every second.</p>
+      <button id="sseConnectBtn" data-testid="sse-connect-btn">Connect</button>
+      <button id="sseDisconnectBtn" data-testid="sse-disconnect-btn" disabled>Disconnect</button>
+      <p>Live Price: <strong id="ssePrice" data-testid="sse-price">--</strong></p>
+      <p>Last Update: <span id="sseTimestamp" data-testid="sse-timestamp">never</span></p>
+      <ul id="sseLog" data-testid="sse-log" style="max-height:120px; overflow-y:auto; font-family:monospace; font-size:0.8rem;"></ul>
+    </section>
+
+    <section class="card">
+      <h2>🕒 Real-Time Live Clock</h2>
+      <p id="liveClock" data-testid="live-clock" style="font-size:1.5rem; font-weight:bold;"></p>
+    </section>
+
+    <section class="card">
+      <h2>📋 Clipboard API</h2>
+      <input type="text" id="clipboardSource" value="Copy this text with Playwright!" data-testid="clipboard-source" />
+      <button id="copyToClipboardBtn" data-testid="copy-btn">Copy to Clipboard</button>
+      <button id="pasteFromClipboardBtn" data-testid="paste-btn">Paste from Clipboard</button>
+      <p id="clipboardResult" data-testid="clipboard-result" aria-live="polite"></p>
+    </section>
+
+    <section class="card">
+      <h2>🔔 Browser Notification API</h2>
+      <button id="requestNotificationBtn" data-testid="request-notification-btn">Request Permission</button>
+      <button id="showNotificationBtn" data-testid="show-notification-btn">Show Notification</button>
+      <p id="notificationResult" data-testid="notification-result" aria-live="polite"></p>
+    </section>
+
+    <section class="card">
+      <h2>📍 Geolocation API</h2>
+      <button id="getLocationBtn" data-testid="get-location-btn">Get My Location</button>
+      <p id="locationResult" data-testid="location-result" aria-live="polite"></p>
+    </section>
+
+    <section class="card">
+      <h2>🔄 Drag-to-Reorder List</h2>
+      <ul id="reorderList" data-testid="reorder-list" style="list-style:none; padding:0;">
+        <li draggable="true" data-testid="reorder-item-1" class="drag-drop-source" style="padding:0.5rem; margin-bottom:4px; border-radius:6px; cursor:grab;">Item 1</li>
+        <li draggable="true" data-testid="reorder-item-2" class="drag-drop-source" style="padding:0.5rem; margin-bottom:4px; border-radius:6px; cursor:grab;">Item 2</li>
+        <li draggable="true" data-testid="reorder-item-3" class="drag-drop-source" style="padding:0.5rem; margin-bottom:4px; border-radius:6px; cursor:grab;">Item 3</li>
+        <li draggable="true" data-testid="reorder-item-4" class="drag-drop-source" style="padding:0.5rem; margin-bottom:4px; border-radius:6px; cursor:grab;">Item 4</li>
+      </ul>
+      <p id="reorderResult" data-testid="reorder-result" aria-live="polite"></p>
+    </section>
+
+    <section class="card">
+      <h2>🔍 Live Autocomplete/Typeahead (debounced API search)</h2>
+      <label for="autocompleteInput">Search products</label>
+      <input type="text" id="autocompleteInput" placeholder="Type a product name..." data-testid="autocomplete-input" autocomplete="off" />
+      <ul id="autocompleteResults" data-testid="autocomplete-results" style="border:1px solid var(--border); border-radius:6px; max-height:150px; overflow-y:auto; list-style:none; padding:0; margin-top:4px;"></ul>
+    </section>
+
+    <section class="card">
+      <h2>⭐ Interactive Star Rating Widget</h2>
+      <div id="starRating" data-testid="star-rating">
+        <span class="star" data-value="1" data-testid="star-1">☆</span>
+        <span class="star" data-value="2" data-testid="star-2">☆</span>
+        <span class="star" data-value="3" data-testid="star-3">☆</span>
+        <span class="star" data-value="4" data-testid="star-4">☆</span>
+        <span class="star" data-value="5" data-testid="star-5">☆</span>
+      </div>
+      <p id="starRatingResult" data-testid="star-rating-result">No rating selected</p>
+    </section>
+
+    <section class="card">
+      <h2>📑 Tabs Widget (ARIA tablist/tab/tabpanel)</h2>
+      <div role="tablist" aria-label="Advanced tabs" data-testid="tabs-list">
+        <button role="tab" aria-selected="true" aria-controls="tabpanel-1" id="tab-1" data-testid="tab-1">Overview</button>
+        <button role="tab" aria-selected="false" aria-controls="tabpanel-2" id="tab-2" data-testid="tab-2">Specs</button>
+        <button role="tab" aria-selected="false" aria-controls="tabpanel-3" id="tab-3" data-testid="tab-3">Reviews</button>
+      </div>
+      <div role="tabpanel" id="tabpanel-1" aria-labelledby="tab-1" data-testid="tabpanel-1">Overview content goes here.</div>
+      <div role="tabpanel" id="tabpanel-2" aria-labelledby="tab-2" data-testid="tabpanel-2" hidden>Specs content goes here.</div>
+      <div role="tabpanel" id="tabpanel-3" aria-labelledby="tab-3" data-testid="tabpanel-3" hidden>Reviews content goes here.</div>
+    </section>
+
+    <section class="card">
+      <h2>🪗 Accordion Widget</h2>
+      <div class="accordion-item" data-testid="accordion-item-1">
+        <button class="accordion-header" aria-expanded="false" data-testid="accordion-header-1">Section 1: What is Playwright?</button>
+        <div class="accordion-panel" hidden data-testid="accordion-panel-1">Playwright is a modern end-to-end testing framework.</div>
+      </div>
+      <div class="accordion-item" data-testid="accordion-item-2">
+        <button class="accordion-header" aria-expanded="false" data-testid="accordion-header-2">Section 2: What is Selenium?</button>
+        <div class="accordion-panel" hidden data-testid="accordion-panel-2">Selenium is a browser automation framework.</div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>🎞️ Native Video &amp; Audio Elements</h2>
+      <video id="practiceVideo" data-testid="practice-video" width="320" height="180" controls muted>
+        <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4" />
+        Your browser doesn't support video.
+      </video>
+      <audio id="practiceAudio" data-testid="practice-audio" controls>
+        <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-audio/t-rex-roar.mp3" type="audio/mpeg" />
+        Your browser doesn't support audio.
+      </audio>
+    </section>
+
+    <section class="card">
+      <h2>🖼️ Responsive &lt;picture&gt; Element</h2>
+      <picture data-testid="responsive-picture">
+        <source media="(min-width: 800px)" srcset="https://picsum.photos/seed/wide/600/200" />
+        <source media="(max-width: 799px)" srcset="https://picsum.photos/seed/narrow/300/200" />
+        <img src="https://picsum.photos/seed/fallback/400/200" alt="Responsive practice image" data-testid="responsive-picture-img" />
+      </picture>
+    </section>
+
+    <section class="card">
+      <h2>🧮 &lt;output&gt; Element (live calculation result)</h2>
+      <form id="outputForm" data-testid="output-form">
+        <label for="outputA">Value A</label>
+        <input type="number" id="outputA" name="outputA" value="10" data-testid="output-input-a" />
+        <label for="outputB">Value B</label>
+        <input type="number" id="outputB" name="outputB" value="5" data-testid="output-input-b" />
+        <p>
+          Sum:
+          <output id="outputResult" name="outputResult" for="outputA outputB" data-testid="output-result">15</output>
+        </p>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>🗺️ &lt;map&gt; / &lt;area&gt; Clickable Image Map</h2>
+      <img src="https://picsum.photos/seed/imagemap/400/200" usemap="#practiceImageMap" alt="Image map practice" width="400" height="200" data-testid="image-map-img" />
+      <map name="practiceImageMap" data-testid="image-map">
+        <area shape="rect" coords="0,0,133,200" alt="Left region" data-testid="image-map-area-left" href="#left" />
+        <area shape="rect" coords="133,0,266,200" alt="Middle region" data-testid="image-map-area-middle" href="#middle" />
+        <area shape="rect" coords="266,0,400,200" alt="Right region" data-testid="image-map-area-right" href="#right" />
+      </map>
+      <p id="imageMapResult" data-testid="image-map-result" aria-live="polite">Click a region of the image above.</p>
+    </section>
+
+    <section class="card">
+      <h2>🧩 &lt;template&gt; / &lt;slot&gt; (Web Component-style templating)</h2>
+      <template id="cardTemplate" data-testid="card-template">
+        <div class="template-card" style="border:1px solid var(--border); border-radius:6px; padding:0.5rem; margin-bottom:6px;">
+          <strong class="template-title"></strong>
+          <p class="template-body"></p>
+        </div>
+      </template>
+      <button id="addTemplateCardBtn" data-testid="add-template-card-btn">Add Card from Template</button>
+      <div id="templateOutput" data-testid="template-output"></div>
+
+      <fieldset data-testid="slot-fieldset" style="margin-top:1rem;">
+        <legend>Custom Element with &lt;slot&gt;</legend>
+        <practice-card data-testid="practice-card-element">
+          <span slot="title">Slotted Title</span>
+          <span slot="body">This content is projected into a shadow DOM slot.</span>
+        </practice-card>
+      </fieldset>
+    </section>
+
+    <section class="card">
+      <h2>🕰️ Deprecated / Legacy HTML Elements (for legacy-site automation practice)</h2>
+      <p class="text-muted">These elements are obsolete and should not be used in new projects, but are included here so automation scripts can practice locating them on legacy pages.</p>
+      <marquee data-testid="legacy-marquee" behavior="scroll" direction="left" style="background:#fef3c7; padding:0.25rem;">This is a deprecated &lt;marquee&gt; element!</marquee>
+      <center data-testid="legacy-center">This text is centered using the deprecated &lt;center&gt; element.</center>
+      <p><font data-testid="legacy-font" color="#dc2626" size="5">This uses the deprecated &lt;font&gt; element.</font></p>
+      <p><big data-testid="legacy-big">Big text</big> vs <small data-testid="legacy-small-inline">small text</small> vs <tt data-testid="legacy-tt">teletype text</tt></p>
+      <p><strike data-testid="legacy-strike">Strikethrough (deprecated, use &lt;s&gt;/&lt;del&gt;)</strike></p>
+      <p><acronym title="Hypertext Markup Language" data-testid="legacy-acronym">HTML</acronym> (deprecated, use &lt;abbr&gt;)</p>
+    </section>
+    <section class="card">
+      <h2>💱 Live Currency History: USD → INR (real data, last 5 days)</h2>
+      <p class="text-muted">Fetched from <code>GET /api/misc/currency-history</code>, which proxies the free public
+        <a href="https://www.frankfurter.app" target="_blank" rel="noopener">Frankfurter API</a> — genuine historical
+        exchange rate data (ECB reference rates), not simulated.</p>
+      <button id="loadCurrencyBtn" data-testid="load-currency-btn">Load Last 5 Days</button>
+      <p id="currencyStatus" data-testid="currency-status" aria-live="polite"></p>
+      <table id="currencyTable" data-testid="currency-table" style="width:100%; border-collapse:collapse; display:none;">
+        <thead>
+          <tr><th style="text-align:left; border-bottom:1px solid var(--border);">Date</th><th style="text-align:left; border-bottom:1px solid var(--border);">1 USD in INR</th></tr>
+        </thead>
+        <tbody id="currencyTableBody" data-testid="currency-table-body"></tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>🥇 Gold Price History: International Spot (last 5 days)</h2>
+      <p class="text-muted">Today's <strong>International</strong> price is fetched live from the free public
+        <a href="https://gold-api.com" target="_blank" rel="noopener">gold-api.com</a> spot-price endpoint (24K/999
+        pure), converted to INR using the live USD→INR rate from
+        <a href="https://www.frankfurter.app" target="_blank" rel="noopener">Frankfurter</a>. 22K prices use
+        the standard 22/24 purity ratio. Only today's row is a live fetch; prior days are clearly labelled
+        <strong>estimated</strong> (deterministically derived from today's real price).</p>
+      <button id="loadGoldBtn" data-testid="load-gold-btn">Load Last 5 Days</button>
+      <p id="goldStatus" data-testid="gold-status" aria-live="polite"></p>
+      <div style="overflow-x:auto;">
+      <table id="goldTable" data-testid="gold-table" style="width:100%; border-collapse:collapse; display:none; white-space:nowrap;">
+        <thead>
+          <tr>
+            <th rowspan="2" style="text-align:left; border-bottom:1px solid var(--border);">Date</th>
+            <th rowspan="2" style="text-align:left; border-bottom:1px solid var(--border);">Spot (USD/oz)</th>
+            <th colspan="2" style="text-align:center; border-bottom:1px solid var(--border);">🌍 International 24K</th>
+            <th colspan="2" style="text-align:center; border-bottom:1px solid var(--border);">🌍 International 22K</th>
+            <th rowspan="2" style="text-align:left; border-bottom:1px solid var(--border);">Type</th>
+          </tr>
+          <tr>
+            <th style="text-align:left; border-bottom:1px solid var(--border);">₹/g</th>
+            <th style="text-align:left; border-bottom:1px solid var(--border);">₹/10g</th>
+            <th style="text-align:left; border-bottom:1px solid var(--border);">₹/g</th>
+            <th style="text-align:left; border-bottom:1px solid var(--border);">₹/10g</th>
+          </tr>
+        </thead>
+        <tbody id="goldTableBody" data-testid="gold-table-body"></tbody>
+      </table>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>🇮🇳 Gold Price History: India Retail Rate — 24K, 22K &amp; 18K (last 10 days)</h2>
+      <p class="text-muted">All 10 rows are <strong>real historical data</strong> scraped directly from the
+        genuine "Gold Rate in India for Last 10 Days" table published on
+        <a href="https://www.goodreturns.in/gold-rates/" target="_blank" rel="noopener">goodreturns.in</a> — 24K
+        and 22K per-gram rates for every date are the site's actual published daily rates (not synthetic
+        estimates). 18K has no dedicated historical column on that site, so it is derived from each day's real
+        24K rate using the standard 18/24 purity ratio. Results are cached server-side for 10 minutes to avoid
+        hammering the source site.</p>
+      <button id="loadIndiaGoldBtn" data-testid="load-india-gold-btn">Load Last 10 Days</button>
+      <p id="indiaGoldStatus" data-testid="india-gold-status" aria-live="polite"></p>
+      <div style="overflow-x:auto;">
+      <table id="indiaGoldTable" data-testid="india-gold-table" style="width:100%; border-collapse:collapse; display:none; white-space:nowrap;">
+        <thead>
+          <tr>
+            <th rowspan="2" style="text-align:left; border-bottom:1px solid var(--border);">Date</th>
+            <th colspan="2" style="text-align:center; border-bottom:1px solid var(--border);">24K</th>
+            <th colspan="2" style="text-align:center; border-bottom:1px solid var(--border);">22K</th>
+            <th colspan="2" style="text-align:center; border-bottom:1px solid var(--border);">18K</th>
+            <th rowspan="2" style="text-align:left; border-bottom:1px solid var(--border);">Type</th>
+          </tr>
+          <tr>
+            <th style="text-align:left; border-bottom:1px solid var(--border);">₹/g</th>
+            <th style="text-align:left; border-bottom:1px solid var(--border);">₹/10g</th>
+            <th style="text-align:left; border-bottom:1px solid var(--border);">₹/g</th>
+            <th style="text-align:left; border-bottom:1px solid var(--border);">₹/10g</th>
+            <th style="text-align:left; border-bottom:1px solid var(--border);">₹/g</th>
+            <th style="text-align:left; border-bottom:1px solid var(--border);">₹/10g</th>
+          </tr>
+        </thead>
+        <tbody id="indiaGoldTableBody" data-testid="india-gold-table-body"></tbody>
+      </table>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>📈 Gold Price Graph: 24K — Multi-Timeframe (zoomable &amp; colourful)</h2>
+      <p class="text-muted">Interactive chart seeded from today's real live gold rate (via
+        <code>/api/misc/india-gold-rates</code>). <strong>"Today"</strong> and <strong>"Yesterday"</strong> use
+        100% real historical data scraped from goodreturns.in's genuine "Last 10 Days" table — the
+        <strong>"Yesterday"</strong> view overlays both days' hourly lines together so you can directly compare
+        today vs. yesterday. Longer ranges (week and beyond) have no free public API for real long-range gold
+        history, so those are clearly-labelled illustrative projections anchored to today's real price — each
+        range's status message tells you which kind you're viewing.
+        <strong>Scroll or pinch on the chart to zoom</strong>, and use the buttons to reset or change timeframe.</p>
+      <div class="gold-graph-range-group" data-purity="24K" style="display:flex; flex-wrap:wrap; gap:0.4rem; margin-bottom:0.75rem;">
+        <button class="gold-graph-range-btn" data-range="today" data-testid="gold-graph-range-today-24k">Today</button>
+        <button class="gold-graph-range-btn" data-range="yesterday" data-testid="gold-graph-range-yesterday-24k">Yesterday</button>
+        <button class="gold-graph-range-btn" data-range="week" data-testid="gold-graph-range-week-24k">Per Week</button>
+        <button class="gold-graph-range-btn" data-range="month" data-testid="gold-graph-range-month-24k">Per Month</button>
+        <button class="gold-graph-range-btn" data-range="quarter" data-testid="gold-graph-range-quarter-24k">Per Quarter</button>
+        <button class="gold-graph-range-btn" data-range="halfyear" data-testid="gold-graph-range-halfyear-24k">Per 6 Months</button>
+        <button class="gold-graph-range-btn" data-range="year" data-testid="gold-graph-range-year-24k">Per Year</button>
+        <button class="gold-graph-range-btn" data-range="twoyear" data-testid="gold-graph-range-twoyear-24k">2 Years</button>
+        <button class="gold-graph-range-btn" data-range="threeyear" data-testid="gold-graph-range-threeyear-24k">3 Years</button>
+        <button class="gold-graph-range-btn" data-range="fiveyear" data-testid="gold-graph-range-fiveyear-24k">Per 5 Years</button>
+        <button class="gold-graph-range-btn" data-range="alltime" data-testid="gold-graph-range-alltime-24k">All Time</button>
+      </div>
+      <div style="display:flex; gap:0.5rem; margin-bottom:0.75rem;">
+        <button class="gold-graph-zoom-in-btn" data-testid="gold-graph-zoom-in-24k">🔍+ Zoom In</button>
+        <button class="gold-graph-zoom-out-btn" data-testid="gold-graph-zoom-out-24k">🔍- Zoom Out</button>
+        <button class="gold-graph-reset-zoom-btn" data-testid="gold-graph-reset-zoom-24k">↺ Reset Zoom</button>
+      </div>
+      <p class="gold-graph-status" data-testid="gold-graph-status-24k" aria-live="polite"></p>
+      <div style="position:relative; height:380px;">
+        <canvas class="gold-graph-canvas" data-purity="24K" data-testid="gold-graph-canvas-24k"></canvas>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>📈 Gold Price Graph: 22K — Multi-Timeframe (zoomable &amp; colourful)</h2>
+      <p class="text-muted">Same real-data-for-recent-days, illustrative-for-longer-ranges approach as the 24K
+        chart above, scaled to the 22K purity ratio (22/24).</p>
+      <div class="gold-graph-range-group" data-purity="22K" style="display:flex; flex-wrap:wrap; gap:0.4rem; margin-bottom:0.75rem;">
+        <button class="gold-graph-range-btn" data-range="today" data-testid="gold-graph-range-today-22k">Today</button>
+        <button class="gold-graph-range-btn" data-range="yesterday" data-testid="gold-graph-range-yesterday-22k">Yesterday</button>
+        <button class="gold-graph-range-btn" data-range="week" data-testid="gold-graph-range-week-22k">Per Week</button>
+        <button class="gold-graph-range-btn" data-range="month" data-testid="gold-graph-range-month-22k">Per Month</button>
+        <button class="gold-graph-range-btn" data-range="quarter" data-testid="gold-graph-range-quarter-22k">Per Quarter</button>
+        <button class="gold-graph-range-btn" data-range="halfyear" data-testid="gold-graph-range-halfyear-22k">Per 6 Months</button>
+        <button class="gold-graph-range-btn" data-range="year" data-testid="gold-graph-range-year-22k">Per Year</button>
+        <button class="gold-graph-range-btn" data-range="twoyear" data-testid="gold-graph-range-twoyear-22k">2 Years</button>
+        <button class="gold-graph-range-btn" data-range="threeyear" data-testid="gold-graph-range-threeyear-22k">3 Years</button>
+        <button class="gold-graph-range-btn" data-range="fiveyear" data-testid="gold-graph-range-fiveyear-22k">Per 5 Years</button>
+        <button class="gold-graph-range-btn" data-range="alltime" data-testid="gold-graph-range-alltime-22k">All Time</button>
+      </div>
+      <div style="display:flex; gap:0.5rem; margin-bottom:0.75rem;">
+        <button class="gold-graph-zoom-in-btn" data-testid="gold-graph-zoom-in-22k">🔍+ Zoom In</button>
+        <button class="gold-graph-zoom-out-btn" data-testid="gold-graph-zoom-out-22k">🔍- Zoom Out</button>
+        <button class="gold-graph-reset-zoom-btn" data-testid="gold-graph-reset-zoom-22k">↺ Reset Zoom</button>
+      </div>
+      <p class="gold-graph-status" data-testid="gold-graph-status-22k" aria-live="polite"></p>
+      <div style="position:relative; height:380px;">
+        <canvas class="gold-graph-canvas" data-purity="22K" data-testid="gold-graph-canvas-22k"></canvas>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>📈 Gold Price Graph: 18K — Multi-Timeframe (zoomable &amp; colourful)</h2>
+      <p class="text-muted">Same real-data-for-recent-days, illustrative-for-longer-ranges approach as the 24K
+        chart above, scaled to the 18K purity ratio (18/24).</p>
+      <div class="gold-graph-range-group" data-purity="18K" style="display:flex; flex-wrap:wrap; gap:0.4rem; margin-bottom:0.75rem;">
+        <button class="gold-graph-range-btn" data-range="today" data-testid="gold-graph-range-today-18k">Today</button>
+        <button class="gold-graph-range-btn" data-range="yesterday" data-testid="gold-graph-range-yesterday-18k">Yesterday</button>
+        <button class="gold-graph-range-btn" data-range="week" data-testid="gold-graph-range-week-18k">Per Week</button>
+        <button class="gold-graph-range-btn" data-range="month" data-testid="gold-graph-range-month-18k">Per Month</button>
+        <button class="gold-graph-range-btn" data-range="quarter" data-testid="gold-graph-range-quarter-18k">Per Quarter</button>
+        <button class="gold-graph-range-btn" data-range="halfyear" data-testid="gold-graph-range-halfyear-18k">Per 6 Months</button>
+        <button class="gold-graph-range-btn" data-range="year" data-testid="gold-graph-range-year-18k">Per Year</button>
+        <button class="gold-graph-range-btn" data-range="twoyear" data-testid="gold-graph-range-twoyear-18k">2 Years</button>
+        <button class="gold-graph-range-btn" data-range="threeyear" data-testid="gold-graph-range-threeyear-18k">3 Years</button>
+        <button class="gold-graph-range-btn" data-range="fiveyear" data-testid="gold-graph-range-fiveyear-18k">Per 5 Years</button>
+        <button class="gold-graph-range-btn" data-range="alltime" data-testid="gold-graph-range-alltime-18k">All Time</button>
+      </div>
+      <div style="display:flex; gap:0.5rem; margin-bottom:0.75rem;">
+        <button class="gold-graph-zoom-in-btn" data-testid="gold-graph-zoom-in-18k">🔍+ Zoom In</button>
+        <button class="gold-graph-zoom-out-btn" data-testid="gold-graph-zoom-out-18k">🔍- Zoom Out</button>
+        <button class="gold-graph-reset-zoom-btn" data-testid="gold-graph-reset-zoom-18k">↺ Reset Zoom</button>
+      </div>
+      <p class="gold-graph-status" data-testid="gold-graph-status-18k" aria-live="polite"></p>
+      <div style="position:relative; height:380px;">
+        <canvas class="gold-graph-canvas" data-purity="18K" data-testid="gold-graph-canvas-18k"></canvas>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">Playwright Practice App &mdash; for local training use only.</footer>
+  <script type="module" src="../ts/common.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js"></script>
+  <script type="module" src="../ts/advanced.js"></script>
+</body>
+</html>

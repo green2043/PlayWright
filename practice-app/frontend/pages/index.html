@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Playwright Practice App</title>
+  <link rel="stylesheet" href="../css/styles.css" />
+</head>
+<body>
+  <header class="app-header">
+    <h1>🎭 Playwright Practice App</h1>
+    <span class="badge" data-testid="app-version">v1.0.0</span>
+  </header>
+
+  <nav class="main-nav" aria-label="Main navigation" data-testid="main-nav">
+    <a href="index.html">Home</a>
+    <a href="forms.html">Forms</a>
+    <a href="tables.html">Tables</a>
+    <a href="popups.html">Popups &amp; Dialogs</a>
+    <a href="iframes.html">iFrames</a>
+    <a href="dynamic.html">Dynamic Content</a>
+    <a href="shadow-dom.html">Shadow DOM</a>
+    <a href="locators.html">Locator Playground</a>
+    <a href="file-upload.html">Files</a>
+    <a href="child/child-page-1.html" target="_blank" rel="noopener">Child Pages</a>
+    <a href="api-playground.html">API Playground</a>
+    <a href="advanced.html">Advanced Elements</a>
+  </nav>
+
+  <main class="container">
+    <section class="card">
+      <h1 id="welcome-heading">Welcome to the Playwright &amp; Selenium Practice Ground</h1>
+      <p>This application is intentionally packed with every kind of element, widget, popup, table,
+        calendar, iframe and API pattern you need to practice UI and API automation with
+        <strong>Playwright (TypeScript)</strong> and <strong>Selenium</strong>.</p>
+      <p title="This is a native title tooltip - hover to see it">Hover over this paragraph to see a native tooltip (practice for <code>getByTitle()</code>).</p>
+    </section>
+
+    <section class="card">
+      <h2 data-testid="sitemap-heading">📖 Sitemap</h2>
+      <ul class="sitemap-list" data-testid="sitemap-list">
+        <li><a href="forms.html">Forms</a> — every form control type, validation states, labels/placeholders.</li>
+        <li><a href="tables.html">Tables</a> — static, sortable, paginated, editable, and checkbox-selection tables.</li>
+        <li><a href="popups.html">Popups &amp; Dialogs</a> — native alert/confirm/prompt, custom modals, toasts, nested modals.</li>
+        <li><a href="iframes.html">iFrames</a> — single and nested iframes.</li>
+        <li><a href="dynamic.html">Dynamic Content</a> — delayed elements, infinite scroll, lazy images, spinners, progress bars, calendars.</li>
+        <li><a href="shadow-dom.html">Shadow DOM</a> — a custom web component using Shadow DOM.</li>
+        <li><a href="locators.html">Locator Playground</a> — dedicated elements for every Playwright built-in locator strategy.</li>
+        <li><a href="file-upload.html">Files</a> — file upload (single/multiple/drag-drop) and downloads (.txt/.csv/.json/.pdf).</li>
+        <li><a href="child/child-page-1.html" target="_blank" rel="noopener">Child Pages</a> — parent/child page navigation practice (opens in a new tab).</li>
+        <li><a href="api-playground.html">API Playground</a> — trigger and inspect REST API calls from the UI.</li>
+        <li><a href="advanced.html">Advanced Elements</a> — real-time SSE feed, clipboard, geolocation, notifications, live clock, drag-reorder, autocomplete, star rating.</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>🔌 API Docs</h2>
+      <p>Full Swagger/OpenAPI documentation is available at
+        <a href="/api-docs" target="_blank" rel="noopener" data-testid="api-docs-link">/api-docs</a>.</p>
+      <button id="reset-data-btn" data-testid="reset-data-btn" title="Reset all seed data">Reset Practice Data</button>
+    </section>
+  </main>
+
+  <footer class="app-footer">Playwright Practice App &mdash; for local training use only.</footer>
+
+  <script type="module" src="../ts/common.js"></script>
+  <script type="module">
+    document.getElementById('reset-data-btn').addEventListener('click', async () => {
+      const res = await fetch('/api/admin/reset', { method: 'POST' });
+      const data = await res.json();
+      alert(data.message || 'Reset complete');
+    });
+  </script>
+</body>
+</html>

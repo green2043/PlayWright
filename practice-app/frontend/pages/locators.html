@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Locator Playground - Playwright Practice App</title>
+  <link rel="stylesheet" href="../css/styles.css" />
+</head>
+<body>
+  <header class="app-header"><h1>🎭 Playwright Practice App</h1></header>
+  <nav class="main-nav" aria-label="Main navigation">
+    <a href="index.html">Home</a>
+    <a href="forms.html">Forms</a>
+    <a href="tables.html">Tables</a>
+    <a href="popups.html">Popups &amp; Dialogs</a>
+    <a href="iframes.html">iFrames</a>
+    <a href="dynamic.html">Dynamic Content</a>
+    <a href="shadow-dom.html">Shadow DOM</a>
+    <a href="locators.html" aria-current="page">Locator Playground</a>
+    <a href="file-upload.html">Files</a>
+    <a href="child/child-page-1.html" target="_blank" rel="noopener">Child Pages</a>
+    <a href="api-playground.html">API Playground</a>
+    <a href="advanced.html">Advanced Elements</a>
+  </nav>
+
+  <main class="container">
+    <section class="card">
+      <h2>getByRole() — explicit &amp; implicit roles</h2>
+      <p class="locator-desc"><code>page.getByRole()</code> to locate by explicit and implicit accessibility attributes.</p>
+      <button data-testid="role-btn-explicit">Native Button (implicit role="button")</button>
+      <div role="button" tabindex="0" data-testid="role-div-explicit" style="display:inline-block; padding:0.5rem 1rem; background:#2563eb; color:#fff; border-radius:6px; cursor:pointer;">Div with role="button" (explicit)</div>
+      <input type="checkbox" id="roleCheckbox" data-testid="role-checkbox" /><label for="roleCheckbox">Implicit checkbox role</label>
+      <div role="alert" data-testid="role-alert">This is an explicit role="alert" element</div>
+      <nav role="navigation" aria-label="Secondary" data-testid="role-nav"><a href="#" data-testid="role-nav-link">Nav Link</a></nav>
+      <h3 data-testid="role-heading">This is an h3 (implicit heading role, level 3)</h3>
+      <p id="roleResult" data-testid="role-result" aria-live="polite"></p>
+
+      <h3>List of common HTML elements and their corresponding ARIA roles</h3>
+      <table data-testid="aria-role-table">
+        <thead>
+          <tr>
+            <th>HTML Element</th>
+            <th>ARIA Role</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><code>&lt;a href="..."&gt;</code></td><td>link</td></tr>
+          <tr><td><code>&lt;area href="..."&gt;</code></td><td>link</td></tr>
+          <tr><td><code>&lt;button&gt;</code></td><td>button</td></tr>
+          <tr><td><code>&lt;form&gt;</code> (with name attribute)</td><td>form</td></tr>
+          <tr><td><code>&lt;h1&gt;, &lt;h2&gt;, &lt;h3&gt;, &lt;h4&gt;, &lt;h5&gt;, &lt;h6&gt;</code></td><td>heading</td></tr>
+          <tr><td><code>&lt;header&gt;</code></td><td>banner (context-specific)</td></tr>
+          <tr><td><code>&lt;img&gt;</code> (with alt)</td><td>img</td></tr>
+          <tr><td><code>&lt;input type="button"&gt;</code></td><td>button</td></tr>
+          <tr><td><code>&lt;input type="checkbox"&gt;</code></td><td>checkbox</td></tr>
+          <tr><td><code>&lt;input type="email"&gt;</code></td><td>textbox</td></tr>
+          <tr><td><code>&lt;input type="password"&gt;</code></td><td>textbox</td></tr>
+          <tr><td><code>&lt;input type="radio"&gt;</code></td><td>radio</td></tr>
+          <tr><td><code>&lt;input type="range"&gt;</code></td><td>slider</td></tr>
+          <tr><td><code>&lt;input type="reset"&gt;</code></td><td>button</td></tr>
+          <tr><td><code>&lt;input type="search"&gt;</code></td><td>searchbox</td></tr>
+          <tr><td><code>&lt;input type="submit"&gt;</code></td><td>button</td></tr>
+          <tr><td><code>&lt;input type="text"&gt;</code></td><td>textbox</td></tr>
+          <tr><td><code>&lt;li&gt;</code></td><td>listitem</td></tr>
+          <tr><td><code>&lt;nav&gt;</code></td><td>navigation</td></tr>
+          <tr><td><code>&lt;main&gt;</code></td><td>main</td></tr>
+          <tr><td><code>&lt;footer&gt;</code></td><td>contentinfo (context-specific)</td></tr>
+          <tr><td><code>&lt;aside&gt;</code></td><td>complementary</td></tr>
+          <tr><td><code>&lt;section&gt;</code> (with accessible name)</td><td>region</td></tr>
+          <tr><td><code>&lt;article&gt;</code></td><td>article</td></tr>
+          <tr><td><code>&lt;dialog&gt;</code></td><td>dialog</td></tr>
+          <tr><td><code>&lt;fieldset&gt;</code></td><td>group</td></tr>
+          <tr><td><code>&lt;legend&gt;</code></td><td>legend (no corresponding ARIA role)</td></tr>
+          <tr><td><code>&lt;progress&gt;</code></td><td>progressbar</td></tr>
+          <tr><td><code>&lt;meter&gt;</code></td><td>meter</td></tr>
+          <tr><td><code>&lt;output&gt;</code></td><td>status</td></tr>
+          <tr><td><code>&lt;dl&gt;</code></td><td>list (per HTML-AAM; no explicit ARIA mapping)</td></tr>
+          <tr><td><code>&lt;dt&gt;, &lt;dd&gt;</code></td><td>listitem (per HTML-AAM; no explicit ARIA mapping)</td></tr>
+          <tr><td><code>&lt;summary&gt;</code></td><td>button (in a &lt;details&gt;)</td></tr>
+          <tr><td><code>&lt;details&gt;</code></td><td>group</td></tr>
+          <tr><td><code>&lt;datalist&gt;</code></td><td>listbox</td></tr>
+          <tr><td><code>&lt;input type="number"&gt;</code></td><td>spinbutton</td></tr>
+          <tr><td><code>&lt;input type="tel"&gt;</code></td><td>textbox</td></tr>
+          <tr><td><code>&lt;input type="url"&gt;</code></td><td>textbox</td></tr>
+          <tr><td><code>&lt;ol&gt;, &lt;ul&gt;</code></td><td>list</td></tr>
+          <tr><td><code>&lt;option&gt;</code></td><td>option</td></tr>
+          <tr><td><code>&lt;select&gt;</code></td><td>listbox (or combobox, depends on usage)</td></tr>
+          <tr><td><code>&lt;table&gt;</code></td><td>table</td></tr>
+          <tr><td><code>&lt;tbody&gt;, &lt;thead&gt;, &lt;tfoot&gt;</code></td><td>rowgroup</td></tr>
+          <tr><td><code>&lt;td&gt;</code></td><td>cell</td></tr>
+          <tr><td><code>&lt;th&gt;</code></td><td>columnheader or rowheader</td></tr>
+          <tr><td><code>&lt;textarea&gt;</code></td><td>textbox</td></tr>
+          <tr><td><code>&lt;tr&gt;</code></td><td>row</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Common WAI-ARIA states &amp; properties (aria-* attributes)</h3>
+      <p class="locator-desc">Per the <a href="https://www.w3.org/TR/wai-aria-1.2/#aria-attributes" target="_blank" rel="noopener">WAI-ARIA 1.2 spec</a>, these attributes let <code>getByRole()</code> filter by <code>name</code>, <code>checked</code>, <code>pressed</code>, <code>expanded</code>, <code>selected</code>, <code>disabled</code>, and <code>level</code>.</p>
+      <table data-testid="aria-attribute-table">
+        <thead>
+          <tr>
+            <th>ARIA Attribute</th>
+            <th>Purpose / Effect on getByRole()</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><code>aria-label</code></td><td>Provides the accessible name directly, used by <code>{ name: ... }</code> option</td></tr>
+          <tr><td><code>aria-labelledby</code></td><td>References another element's text as this element's accessible name</td></tr>
+          <tr><td><code>aria-describedby</code></td><td>References the element(s) that describe this element (accessible description)</td></tr>
+          <tr><td><code>aria-checked</code></td><td>Matched by <code>getByRole('checkbox', { checked: true|false })</code></td></tr>
+          <tr><td><code>aria-pressed</code></td><td>Matched by <code>getByRole('button', { pressed: true|false })</code></td></tr>
+          <tr><td><code>aria-expanded</code></td><td>Matched by <code>getByRole(role, { expanded: true|false })</code></td></tr>
+          <tr><td><code>aria-selected</code></td><td>Matched by <code>getByRole('option'|'tab', { selected: true|false })</code></td></tr>
+          <tr><td><code>aria-disabled</code></td><td>Matched by <code>getByRole(role, { disabled: true|false })</code></td></tr>
+          <tr><td><code>aria-level</code></td><td>Matched by <code>getByRole('heading', { level: 1-6 })</code></td></tr>
+          <tr><td><code>aria-hidden</code></td><td>Removes the element (and its subtree) from the accessibility tree entirely</td></tr>
+          <tr><td><code>aria-current</code></td><td>Indicates the current item within a set (e.g. current page in nav)</td></tr>
+          <tr><td><code>aria-required</code></td><td>Indicates a form field must be filled before submission</td></tr>
+          <tr><td><code>aria-invalid</code></td><td>Indicates the current value of a field fails validation</td></tr>
+          <tr><td><code>aria-live</code></td><td>Marks a region as a live region ("polite"/"assertive") for dynamic updates</td></tr>
+          <tr><td><code>aria-haspopup</code></td><td>Indicates the element triggers a popup (menu, dialog, listbox, etc.)</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Accessible name computation sources (AccName spec order)</h3>
+      <p class="locator-desc">Per the <a href="https://w3c.github.io/accname/#dfn-accessible-name" target="_blank" rel="noopener">AccName 1.2 spec</a>, an element's accessible name — used by the <code>{ name }</code> option in <code>getByRole()</code> — is computed from the first applicable source below.</p>
+      <table data-testid="accname-source-table">
+        <thead>
+          <tr>
+            <th>Priority</th>
+            <th>Name Source</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td><code>aria-labelledby</code> (referenced element's text content)</td></tr>
+          <tr><td>2</td><td><code>aria-label</code> attribute</td></tr>
+          <tr><td>3</td><td>Native HTML labelling (e.g. <code>&lt;label for&gt;</code>, wrapping <code>&lt;label&gt;</code>)</td></tr>
+          <tr><td>4</td><td><code>placeholder</code> attribute (host-language-defined fallback, e.g. for inputs)</td></tr>
+          <tr><td>5</td><td><code>title</code> attribute</td></tr>
+          <tr><td>6</td><td>Subtree text content (visible text/descendant nodes flattened)</td></tr>
+          <tr><td>7</td><td><code>alt</code> attribute (for <code>&lt;img&gt;</code>/<code>&lt;area&gt;</code>)</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>getByText() — exact, partial, duplicate text</h2>
+      <p class="locator-desc"><code>page.getByText()</code> to locate by text content.</p>
+      <p data-testid="text-unique">This paragraph has completely unique text content.</p>
+      <p data-testid="text-duplicate-1">Duplicate label text</p>
+      <p data-testid="text-duplicate-2">Duplicate label text</p>
+      <p data-testid="text-partial">Automation testing with Playwright is fun and powerful</p>
+      <p><em>Tip: click any paragraph above to highlight it (practice for verifying element state).</em></p>
+    </section>
+
+    <section class="card">
+      <h2>getByLabel() — for/id, wrapped, aria-label</h2>
+      <p class="locator-desc"><code>page.getByLabel()</code> to locate a form control by associated label's text.</p>
+      <label for="labelForInput">Label via for/id</label>
+      <input type="text" id="labelForInput" data-testid="label-for-input" />
+      <label>Wrapped Label Input <input type="text" data-testid="label-wrapped-input" /></label>
+      <input type="text" aria-label="Aria label input" data-testid="label-aria-input" />
+      <p id="labelEchoResult" data-testid="label-echo-result" aria-live="polite"></p>
+    </section>
+
+    <section class="card">
+      <h2>getByPlaceholder() — distinct &amp; similar placeholders</h2>
+      <p class="locator-desc"><code>page.getByPlaceholder()</code> to locate an input by placeholder.</p>
+      <input type="text" placeholder="Enter your username" data-testid="placeholder-username" />
+      <input type="text" placeholder="Enter your user email" data-testid="placeholder-similar" />
+      <p id="placeholderEchoResult" data-testid="placeholder-echo-result" aria-live="polite"></p>
+    </section>
+
+    <section class="card">
+      <h2>getByAltText() — meaningful, broken, decorative, icon</h2>
+      <p class="locator-desc"><code>page.getByAltText()</code> to locate an element, usually image, by its text alternative.</p>
+      <img src="https://picsum.photos/seed/alt/100/60" alt="A scenic mountain view" data-testid="alt-meaningful" />
+      <img src="https://example.com/broken-image-404.png" alt="Broken image placeholder" data-testid="alt-broken" />
+      <img src="https://picsum.photos/seed/deco2/60/40" alt="" data-testid="alt-decorative" />
+      <button data-testid="alt-icon-button" title="Settings" style="background:none; border:none; cursor:pointer;">
+        <img src="https://picsum.photos/seed/icon/24/24" alt="Settings icon" />
+      </button>
+      <p id="altResult" data-testid="alt-result" aria-live="polite"></p>
+    </section>
+
+    <section class="card">
+      <h2>getByTitle() — tooltip-producing title attributes</h2>
+      <p class="locator-desc"><code>page.getByTitle()</code> to locate an element by its title attribute.</p>
+      <button title="Save your changes" data-testid="title-save-btn">Save</button>
+      <a href="#" title="Go back to previous page" data-testid="title-back-link">Back</a>
+      <span title="Additional context info" data-testid="title-info-span" style="cursor:help;">ℹ️</span>
+      <p id="titleResult" data-testid="title-result" aria-live="polite"></p>
+    </section>
+
+    <section class="card">
+      <h2>getByTestId() — data-testid &amp; custom data-qa attribute</h2>
+      <p class="locator-desc"><code>page.getByTestId()</code> to locate an element based on its <code>data-testid</code> attribute (other attributes can be configured).</p>
+      <button data-testid="testid-standard-btn">Standard data-testid button</button>
+      <button data-qa="custom-qa-btn">Custom data-qa button (configure testIdAttribute)</button>
+      <p id="testIdResult" data-testid="testid-result" aria-live="polite"></p>
+    </section>
+
+    <section class="card">
+      <h2>Combined Locator Strategies &amp; Ambiguous Cases</h2>
+      <button role="button" aria-label="Multi-strategy button" title="Multi strategy tooltip" data-testid="multi-strategy-btn">Multi Strategy Button</button>
+      <div>
+        <button class="ambiguous-btn" data-testid="ambiguous-btn-1">Submit</button>
+        <button class="ambiguous-btn" data-testid="ambiguous-btn-2">Submit</button>
+        <button class="ambiguous-btn" data-testid="ambiguous-btn-3">Submit</button>
+      </div>
+      <p id="ambiguousResult" data-testid="ambiguous-result" aria-live="polite"></p>
+    </section>
+
+    <section class="card">
+      <h2>Filtering Locators — filter(), hasText, hasNotText, has</h2>
+      <ul class="product-list" data-testid="filter-product-list" style="list-style:none; padding:0;">
+        <li data-testid="filter-product-1">
+          <h3>Product 1</h3>
+          <span class="stock-badge in-stock">In stock</span>
+          <button data-testid="filter-add-to-cart-1">Add to cart</button>
+        </li>
+        <li data-testid="filter-product-2">
+          <h3>Product 2</h3>
+          <span class="stock-badge out-of-stock">Out of stock</span>
+          <button data-testid="filter-add-to-cart-2">Add to cart</button>
+        </li>
+        <li data-testid="filter-product-3">
+          <h3>Product 3</h3>
+          <span class="stock-badge in-stock">In stock</span>
+          <button data-testid="filter-add-to-cart-3">Add to cart</button>
+        </li>
+      </ul>
+      <p id="filterResult" data-testid="filter-result" aria-live="polite"></p>
+    </section>
+
+    <section class="card">
+      <h2>Locate by CSS or XPath — page.locator()</h2>
+      <div id="cssIdTarget" class="css-class-target" data-testid="css-xpath-container">
+        <p>Locate this text via CSS <code>#cssIdTarget</code>, class <code>.css-class-target</code>, or XPath <code>//div[@id='cssIdTarget']//button</code>.</p>
+        <button data-testid="css-xpath-btn">CSS/XPath Target Button</button>
+      </div>
+      <p id="cssXpathResult" data-testid="css-xpath-result" aria-live="polite"></p>
+    </section>
+
+    <section class="card">
+      <h2>Lists — count, nth(), first(), last()</h2>
+      <ul data-testid="fruit-list" style="list-style:none; padding:0;">
+        <li data-testid="fruit-item">apple</li>
+        <li data-testid="fruit-item">banana</li>
+        <li data-testid="fruit-item">orange</li>
+      </ul>
+      <p id="fruitResult" data-testid="fruit-result" aria-live="polite"></p>
+    </section>
+
+    <section class="card">
+      <h2>Chaining Filters — narrow down by text + child locator</h2>
+      <ul data-testid="chain-list" style="list-style:none; padding:0;">
+        <li data-testid="chain-row">
+          <div class="chain-name">John</div>
+          <div><button data-testid="chain-btn-hello">Say hello</button></div>
+        </li>
+        <li data-testid="chain-row">
+          <div class="chain-name">Mary</div>
+          <div><button data-testid="chain-btn-hello">Say hello</button></div>
+        </li>
+        <li data-testid="chain-row">
+          <div class="chain-name">John</div>
+          <div><button data-testid="chain-btn-goodbye">Say goodbye</button></div>
+        </li>
+        <li data-testid="chain-row">
+          <div class="chain-name">Mary</div>
+          <div><button data-testid="chain-btn-goodbye">Say goodbye</button></div>
+        </li>
+      </ul>
+      <p id="chainResult" data-testid="chain-result" aria-live="polite"></p>
+    </section>
+  </main>
+
+  <footer class="app-footer">Playwright Practice App &mdash; for local training use only.</footer>
+  <script type="module" src="../ts/common.js"></script>
+  <script type="module" src="../ts/locators.js"></script>
+</body>
+</html>

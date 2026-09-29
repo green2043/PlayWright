@@ -1,0 +1,1295 @@
+:root {
+  --primary: #2563eb;
+  --primary-dark: #1d4ed8;
+  --success: #16a34a;
+  --danger: #dc2626;
+  --warning: #d97706;
+  --bg: #f8fafc;
+  --card-bg: #ffffff;
+  --border: rgba(255, 143, 171, 0.35);
+  --text: #1e293b;
+  --text-muted: #64748b;
+  --radius: 8px;
+  --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+}
+
+/* ============================================================
+   ✨ Makoto Shinkai–inspired anime decor (dreamy sky, clouds,
+   stars & sakura petals). Purely decorative — sits behind all
+   content (z-index: -1) and never intercepts pointer events,
+   so it never interferes with Playwright/Selenium automation.
+   ============================================================ */
+.anime-sky-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background: linear-gradient(180deg, #cfe8ff 0%, #eaf4ff 35%, #fdf3e7 70%, #ffe3d6 100%);
+  overflow: hidden;
+}
+
+.anime-sky-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(2px 2px at 10% 20%, rgba(255,255,255,0.9), transparent),
+    radial-gradient(2px 2px at 80% 15%, rgba(255,255,255,0.8), transparent),
+    radial-gradient(1.5px 1.5px at 60% 30%, rgba(255,255,255,0.7), transparent),
+    radial-gradient(1.5px 1.5px at 30% 10%, rgba(255,255,255,0.6), transparent),
+    radial-gradient(2px 2px at 90% 40%, rgba(255,255,255,0.7), transparent);
+  animation: twinkle 4s ease-in-out infinite alternate;
+}
+
+@keyframes twinkle {
+  from { opacity: 0.4; }
+  to { opacity: 1; }
+}
+
+.anime-cloud {
+  position: fixed;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.85;
+  filter: drop-shadow(0 4px 6px rgba(255,255,255,0.4));
+  animation-name: drift-cloud;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes drift-cloud {
+  from { transform: translateX(-20vw); }
+  to { transform: translateX(120vw); }
+}
+
+.anime-petal {
+  position: fixed;
+  top: -5vh;
+  z-index: -1;
+  pointer-events: none;
+  font-size: 1.4rem;
+  animation-name: fall-petal;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  filter: drop-shadow(0 2px 3px rgba(0,0,0,0.08));
+}
+
+@keyframes fall-petal {
+  0% { transform: translateY(-10vh) translateX(0) rotate(0deg); opacity: 0; }
+  10% { opacity: 1; }
+  100% { transform: translateY(110vh) translateX(40px) rotate(360deg); opacity: 0.9; }
+}
+
+.anime-corner-sticker {
+  position: fixed;
+  bottom: 12px;
+  right: 12px;
+  z-index: 5;
+  pointer-events: none;
+  font-size: 2.25rem;
+  opacity: 0.9;
+  animation: float-sticker 3s ease-in-out infinite;
+  user-select: none;
+}
+
+@keyframes float-sticker {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50% { transform: translateY(-8px) rotate(3deg); }
+}
+
+/* --- "Your Name" (君の名は。) streaking comet --- */
+.anime-comet {
+  position: fixed;
+  top: 6%;
+  left: -10%;
+  z-index: -1;
+  width: 6px;
+  height: 6px;
+  pointer-events: none;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff8e1 0%, #ffe082 40%, rgba(255,224,130,0) 70%);
+  box-shadow: 0 0 12px 4px rgba(255, 236, 179, 0.8);
+  animation: comet-streak 14s ease-in infinite;
+}
+
+.anime-comet::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 100%;
+  width: 220px;
+  height: 2px;
+  transform: translateY(-50%);
+  background: linear-gradient(90deg, rgba(255,236,179,0) 0%, rgba(255,236,179,0.8) 100%);
+  filter: blur(0.5px);
+}
+
+@keyframes comet-streak {
+  0% { transform: translate(0, 0); opacity: 0; }
+  5% { opacity: 1; }
+  35% { transform: translate(130vw, 24vh); opacity: 1; }
+  40% { opacity: 0; }
+  100% { transform: translate(130vw, 24vh); opacity: 0; }
+}
+
+/* --- "Your Name" red thread of fate, drifting gently across a corner --- */
+.anime-thread-of-fate {
+  position: fixed;
+  top: 0;
+  right: 4%;
+  z-index: -1;
+  width: 80px;
+  height: 60vh;
+  pointer-events: none;
+  opacity: 0.55;
+  animation: thread-sway 10s ease-in-out infinite;
+  transform-origin: top center;
+}
+
+.anime-thread-of-fate svg {
+  width: 100%;
+  height: 100%;
+}
+
+.anime-thread-of-fate path {
+  fill: none;
+  stroke: #e0455f;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 3px rgba(224, 69, 95, 0.5));
+}
+
+@keyframes thread-sway {
+  0%, 100% { transform: rotate(-2deg); }
+  50% { transform: rotate(2deg); }
+}
+
+/* --- "Weathering With You" (天気の子) falling rain --- */
+.anime-rain {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+  opacity: 0.5;
+}
+
+.anime-raindrop {
+  position: absolute;
+  top: -10%;
+  width: 1px;
+  height: 60px;
+  background: linear-gradient(180deg, rgba(174, 216, 255, 0) 0%, rgba(174, 216, 255, 0.7) 100%);
+  animation-name: rain-fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes rain-fall {
+  0% { transform: translateY(-10vh); opacity: 0; }
+  10% { opacity: 1; }
+  100% { transform: translateY(110vh); opacity: 0.6; }
+}
+
+/* --- "Weathering With You" teru teru bozu sunshine charm --- */
+.anime-teru-teru-bozu {
+  position: fixed;
+  top: 0;
+  left: 24px;
+  z-index: -1;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: teru-swing 3.5s ease-in-out infinite;
+  transform-origin: top center;
+}
+
+.anime-teru-teru-bozu .teru-string {
+  width: 1px;
+  height: 40px;
+  background: rgba(100, 116, 139, 0.5);
+}
+
+.anime-teru-teru-bozu .teru-body {
+  font-size: 2rem;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
+}
+
+@keyframes teru-swing {
+  0%, 100% { transform: rotate(-6deg); }
+  50% { transform: rotate(6deg); }
+}
+
+/* --- "Your Name" twilight (kataware-doki / 逢魔が時) gradient frame,
+   used to replace flat white borders on header/nav/cards so the
+   dreamy sky shows through instead of solid white bands. --- */
+:root {
+  --twilight-gradient: linear-gradient(90deg, #6a5acd 0%, #ff8fab 45%, #ffb677 75%, #ffe29a 100%);
+}
+
+/* Give cards a soft frosted-glass, Makoto Shinkai–style look so the
+   dreamy sky/comet/thread show through subtly. See consolidated
+   .card rule further below for the full twilight treatment. */
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+  background: transparent;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+header.app-header {
+  background: linear-gradient(120deg, rgba(37, 99, 235, 0.9) 0%, rgba(106, 90, 205, 0.9) 60%, rgba(255, 143, 171, 0.85) 100%);
+  color: #fff;
+  padding: 1rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  border-bottom: 3px solid transparent;
+  border-image: var(--twilight-gradient) 1;
+  backdrop-filter: blur(4px);
+}
+
+header.app-header h1 { font-size: 1.25rem; margin: 0; }
+
+nav.main-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(8px);
+  border-bottom: 3px solid transparent;
+  border-image: var(--twilight-gradient) 1;
+}
+
+nav.main-nav a {
+  padding: 0.4rem 0.75rem;
+  border-radius: var(--radius);
+  text-decoration: none;
+  color: var(--text);
+  font-size: 0.9rem;
+}
+
+nav.main-nav a:hover, nav.main-nav a[aria-current="page"] {
+  background: var(--primary);
+  color: #fff;
+}
+
+main.container {
+  max-width: 1100px;
+  margin: 1.5rem auto;
+  padding: 0 1rem;
+}
+
+.card {
+  position: relative;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.82) 0%, rgba(240, 244, 255, 0.7) 55%, rgba(255, 235, 224, 0.68) 100%);
+  border: 1px solid transparent;
+  background-clip: padding-box;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow), 0 0 0 1px rgba(255, 143, 171, 0.25);
+  backdrop-filter: blur(8px) saturate(1.1);
+  padding: 1.25rem;
+  margin-bottom: 1.25rem;
+  overflow: hidden;
+  transition: box-shadow 0.35s ease, transform 0.35s ease;
+}
+
+/* Gradient "twilight" glow ring, drawn behind the card so it reads as a
+   soft border without needing border-image (keeps rounded corners intact) */
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: var(--radius);
+  background: var(--twilight-gradient);
+  opacity: 0.5;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* A faint drifting sparkle/star sheen across the card surface, echoing the
+   twinkling sky background — purely decorative, never blocks interaction */
+.card::after {
+  content: "";
+  position: absolute;
+  inset: -40% -40%;
+  background:
+    radial-gradient(1.5px 1.5px at 15% 20%, rgba(255,255,255,0.9), transparent),
+    radial-gradient(1.5px 1.5px at 70% 60%, rgba(255,255,255,0.7), transparent),
+    radial-gradient(1px 1px at 40% 80%, rgba(255,255,255,0.6), transparent),
+    radial-gradient(1px 1px at 85% 15%, rgba(255,255,255,0.5), transparent);
+  opacity: 0.6;
+  pointer-events: none;
+  animation: card-sheen 6s ease-in-out infinite alternate;
+}
+
+@keyframes card-sheen {
+  from { transform: translate(0, 0); opacity: 0.35; }
+  to { transform: translate(2%, -2%); opacity: 0.7; }
+}
+
+.card:hover {
+  box-shadow: var(--shadow), 0 0 18px rgba(255, 143, 171, 0.45), 0 0 0 1px rgba(255, 143, 171, 0.4);
+  transform: translateY(-2px);
+}
+
+.card h2 { margin-top: 0; font-size: 1.1rem; position: relative; z-index: 1; }
+.card > * { position: relative; z-index: 1; }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+label { display: block; font-weight: 600; font-size: 0.85rem; margin-bottom: 0.25rem; }
+
+input, select, textarea, button {
+  font-family: inherit;
+  font-size: 0.9rem;
+}
+
+input[type="text"], input[type="password"], input[type="email"], input[type="number"],
+input[type="tel"], input[type="url"], input[type="search"], input[type="date"],
+input[type="datetime-local"], input[type="color"], textarea, select {
+  width: 100%;
+  padding: 0.5rem 0.65rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 0.85rem;
+  background: #fff;
+}
+
+/* ------------------------------------------------------------------------
+   select cursor/focus affordance (option text/background contrast is fixed
+   further below, after the dark-theme input overrides, so it always wins
+   regardless of theme layering order). See "Fix: the native <option>..."
+   comment near the .badge rule for full details. ------------------------ */
+select {
+  cursor: pointer;
+}
+select:focus {
+  outline: 2px solid var(--anime-green, var(--primary));
+  outline-offset: 1px;
+}
+
+input:disabled, textarea:disabled, select:disabled { background: #f1f5f9; color: #94a3b8; }
+
+button, .btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: var(--radius);
+  background: var(--primary);
+  color: #fff;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+button:hover, .btn:hover { background: var(--primary-dark); }
+button:disabled { background: #94a3b8; cursor: not-allowed; }
+
+.btn-danger { background: var(--danger); }
+.btn-success { background: var(--success); }
+.btn-secondary { background: #64748b; }
+
+/* Colourful timeframe selector buttons for the gold price graph */
+.gold-graph-range-btn {
+  background: linear-gradient(135deg, #6a5acd, #ff8fab);
+  border-radius: 999px;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.85rem;
+  opacity: 0.75;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.gold-graph-range-btn:hover { opacity: 1; transform: translateY(-1px); }
+.gold-graph-range-btn.active {
+  opacity: 1;
+  background: linear-gradient(135deg, #ffb677, #ff8fab, #6a5acd);
+  box-shadow: 0 0 10px rgba(255, 143, 171, 0.6);
+}
+
+/* Weekly/Monthly bar-graph mode toggle buttons */
+.gold-weekly-monthly-toggle-btn {
+  background: linear-gradient(135deg, #22c55e, #6a5acd);
+  border-radius: 999px;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.85rem;
+  opacity: 0.75;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.gold-weekly-monthly-toggle-btn:hover { opacity: 1; transform: translateY(-1px); }
+.gold-weekly-monthly-toggle-btn.active {
+  opacity: 1;
+  background: linear-gradient(135deg, #ffb677, #22c55e, #6a5acd);
+  box-shadow: 0 0 10px rgba(34, 197, 94, 0.6);
+}
+
+table { width: 100%; border-collapse: collapse; }
+table th, table td { text-align: left; padding: 0.5rem 0.65rem; border-bottom: 1px solid var(--border); }
+table th { background: #f1f5f9; cursor: pointer; user-select: none; }
+
+.badge {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  background: #e0e7ff;
+  color: var(--primary-dark);
+}
+
+.toast-container {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.toast {
+  background: #1e293b;
+  color: #fff;
+  padding: 0.65rem 1rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  min-width: 220px;
+  animation: fadein 0.2s ease-in;
+}
+
+@keyframes fadein { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modal-overlay[hidden] { display: none; }
+
+.modal {
+  background: linear-gradient(160deg, #1a222b, #0b0f14);
+  color: #eafff0;
+  border: 1px solid rgba(57, 255, 20, 0.35);
+  box-shadow: 0 0 24px rgba(57, 255, 20, 0.25), 0 10px 30px rgba(0,0,0,0.5);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  min-width: 320px;
+  max-width: 90vw;
+}
+.modal h1, .modal h2, .modal h3, .modal p, .modal label, .modal span { color: #eafff0; }
+
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid #e2e8f0;
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  display: inline-block;
+}
+/* The [hidden] attribute has the same CSS specificity as the .spinner class,
+   and since .spinner is declared later in the stylesheet it would otherwise
+   win the cascade and keep the spinner visible even when hidden="" is set.
+   This rule restores the expected "hidden means display:none" behaviour. */
+.spinner[hidden] {
+  display: none;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.skeleton {
+  background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 37%, #e2e8f0 63%);
+  background-size: 400% 100%;
+  animation: skeleton-loading 1.4s ease infinite;
+  border-radius: var(--radius);
+  height: 1rem;
+}
+
+@keyframes skeleton-loading { 0% { background-position: 100% 50%; } 100% { background-position: 0 50%; } }
+
+/* ------------------------------------------------------------------------
+   AJAX-style components (forms.html "AJAX-Style Components" card, and
+   dynamic.html dynamic/cascading dropdowns). Kept visually consistent with
+   the existing card/border/input styling and the anime-green accent. ------ */
+.ajax-search-results {
+  margin-top: 0.4rem;
+  min-height: 1.6rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: linear-gradient(160deg, var(--night-black-3, #fff), var(--night-black-2, #fff));
+  overflow: hidden;
+}
+.ajax-search-results:empty { border-color: transparent; background: transparent; }
+.ajax-search-result-item {
+  padding: 0.45rem 0.65rem;
+  font-size: 0.85rem;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+}
+.ajax-search-result-item:last-child { border-bottom: none; }
+.ajax-search-result-item:hover,
+.ajax-search-result-item.active {
+  background: var(--anime-green, var(--primary));
+  color: #06210a;
+}
+.ajax-search-no-results,
+.ajax-search-loading {
+  padding: 0.5rem 0.65rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.ajax-weather-result {
+  margin-top: 0.4rem;
+  min-height: 2.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.6rem 0.75rem;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.ajax-weather-placeholder { color: var(--text-muted); font-size: 0.85rem; }
+.ajax-weather-temp { font-weight: 700; font-size: 1.05rem; }
+.ajax-weather-icon { font-size: 1.3rem; }
+
+/* ------------------------------------------------------------------------
+   Bootstrap-style dropdowns (forms.html "Bootstrap-Style Dropdowns" card).
+   Uses the classic Bootstrap .dropdown/.dropdown-toggle/.dropdown-menu/
+   .dropdown-item structure (no Bootstrap JS needed - see forms.ts for the
+   small local toggle script), restyled to match this app's card/button/
+   anime-green accent theme instead of Bootstrap's default blue/white look.
+   ------------------------------------------------------------------------ */
+.dropdown { position: relative; margin-bottom: 0.85rem; }
+
+.dropdown-toggle { position: relative; padding-right: 2rem; }
+.dropdown-toggle::after {
+  content: "";
+  position: absolute;
+  right: 0.85rem;
+  top: 50%;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: translateY(-70%) rotate(45deg);
+  transition: transform 0.2s ease;
+}
+.dropdown-toggle[aria-expanded="true"]::after { transform: translateY(-30%) rotate(-135deg); }
+
+.dropdown-menu {
+  position: absolute;
+  z-index: 20;
+  top: calc(100% + 4px);
+  left: 0;
+  min-width: 100%;
+  max-width: 320px;
+  margin: 0;
+  padding: 0.35rem;
+  list-style: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: linear-gradient(160deg, var(--night-black-3, #fff), var(--night-black-2, #fff));
+  box-shadow: var(--shadow), 0 10px 24px -8px rgba(0,0,0,0.5);
+}
+.dropdown-menu[hidden] { display: none; }
+
+button.dropdown-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 0.5rem 0.65rem;
+  border: none;
+  border-radius: calc(var(--radius) - 2px);
+  background: transparent;
+  color: #eafff0;
+  font-size: 0.88rem;
+  cursor: pointer;
+  box-shadow: none;
+  text-shadow: none;
+}
+button.dropdown-item:hover,
+button.dropdown-item:focus,
+button.dropdown-item.active {
+  background: var(--anime-green, var(--primary));
+  color: #06210a;
+  filter: none;
+  transform: none;
+}
+button.dropdown-item::after { content: none; }
+button.dropdown-item-danger { color: var(--danger, #dc2626); }
+button.dropdown-item-danger:hover, button.dropdown-item-danger:focus { background: var(--danger, #dc2626); color: #fff; }
+
+.dropdown-divider {
+  height: 1px;
+  margin: 0.35rem 0.2rem;
+  background: var(--border);
+  list-style: none;
+}
+
+.dropdown-item-checkbox {
+  display: flex !important;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 400;
+  margin-bottom: 0;
+  cursor: pointer;
+}
+
+/* ------------------------------------------------------------------------
+   OrangeHRM-style Job Title dropdown (forms.html "Job Title Dropdown" card).
+   Built entirely from div/span elements (no ul/li/button), mirroring
+   div.oxd-select-wrapper > div.oxd-select-text + div.oxd-select-dropdown >
+   div.oxd-select-option markup. See forms.ts for the DOM-injection logic.
+   ------------------------------------------------------------------------ */
+.oxd-select-wrapper { position: relative; margin-bottom: 0.85rem; max-width: 320px; }
+
+.oxd-select-text {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.55rem 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--night-black-2, #fff);
+  color: #eafff0;
+  cursor: pointer;
+  font-size: 0.9rem;
+  user-select: none;
+}
+.oxd-select-text:focus { outline: 2px solid var(--anime-green, var(--primary)); outline-offset: 1px; }
+.oxd-select-text-input { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.oxd-select-text-after { display: flex; align-items: center; margin-left: 0.5rem; }
+.oxd-select-text-arrow {
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform 0.2s ease;
+}
+.oxd-select-text[aria-expanded="true"] .oxd-select-text-arrow { transform: rotate(-135deg); }
+
+.oxd-select-dropdown {
+  position: absolute;
+  z-index: 20;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  max-height: 220px;
+  overflow-y: auto;
+  padding: 0.35rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: linear-gradient(160deg, var(--night-black-3, #fff), var(--night-black-2, #fff));
+  box-shadow: var(--shadow), 0 10px 24px -8px rgba(0,0,0,0.5);
+}
+
+.oxd-select-option {
+  display: block;
+  padding: 0.5rem 0.65rem;
+  border-radius: calc(var(--radius) - 2px);
+  color: #eafff0;
+  font-size: 0.88rem;
+  cursor: pointer;
+}
+.oxd-select-option:hover,
+.oxd-select-option:focus {
+  background: var(--anime-green, var(--primary));
+  color: #06210a;
+  outline: none;
+}
+.dropdown-item-checkbox input[type="checkbox"] { width: auto; margin: 0; }
+.dropdown-menu-checklist { max-height: 220px; overflow-y: auto; }
+
+.dropdown-menu-searchable { min-width: 220px; }
+.dropdown-search-input {
+  width: 100%;
+  margin: 0 0 0.4rem 0;
+  padding: 0.4rem 0.55rem;
+}
+/* ------------------------------------------------------------------------
+   Fix: the searchable-country <li> list sits inside the DARK .dropdown-menu
+   popup (see .dropdown-menu background above), but its text colour was
+   `var(--text, #1e293b)` - a DARK colour meant for LIGHT backgrounds -
+   making every country name dark-text-on-dark-background and effectively
+   invisible (same class of bug as the earlier white-on-white <select>
+   issue). Force light, readable text here instead, and explicitly style
+   the scrollbar track/thumb so the list's scrollbar doesn't render as a
+   jarring plain-white bar that clashes with the dark popup. ------------- */
+#searchableDropdownList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 200px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--anime-green, var(--primary)) transparent;
+}
+#searchableDropdownList::-webkit-scrollbar { width: 8px; }
+#searchableDropdownList::-webkit-scrollbar-track { background: transparent; }
+#searchableDropdownList::-webkit-scrollbar-thumb {
+  background: var(--anime-green, var(--primary));
+  border-radius: 999px;
+}
+#searchableDropdownList li {
+  padding: 0.45rem 0.6rem;
+  font-size: 0.86rem;
+  border-radius: calc(var(--radius) - 2px);
+  cursor: pointer;
+  color: #eafff0;
+}
+#searchableDropdownList li:hover,
+#searchableDropdownList li.active {
+  background: var(--anime-green, var(--primary));
+  color: #06210a;
+}
+#searchableDropdownList .dropdown-no-results {
+  color: var(--text-muted);
+  cursor: default;
+}
+#searchableDropdownList .dropdown-no-results:hover { background: transparent; color: var(--text-muted); }
+
+
+/* ------------------------------------------------------------------------
+   The "Bootstrap-Style Dropdowns" card needs its own grid sizing and, more
+   importantly, must NOT clip overflow: every .card has `overflow: hidden`
+   (for its rounded-corner gradient/glow effects), which was cutting off
+   the absolutely-positioned .dropdown-menu popups whenever they opened,
+   making the open menu appear to spill outside/below the card border
+   instead of floating cleanly on top of it. Also widen this card's grid
+   columns and add extra bottom spacing so an open menu never overlaps the
+   next dropdown's toggle button. ------------------------------------------ */
+#bootstrapDropdownsCard {
+  overflow: visible;
+}
+/* Re-contain the decorative sparkle sheen (::after uses inset:-40%) to the
+   card's rounded bounds now that overflow:hidden has been lifted above -
+   otherwise the sheen would visibly spill past the card's rounded corners. */
+#bootstrapDropdownsCard::after {
+  inset: 0;
+  border-radius: var(--radius);
+}
+#bootstrapDropdownsCard .grid {
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  row-gap: 2.75rem;
+  column-gap: 1.5rem;
+  align-items: start;
+}
+#bootstrapDropdownsCard .dropdown {
+  min-width: 0;
+}
+#bootstrapDropdownsCard .dropdown-toggle {
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Native <select multiple> "Tech Stack" listbox (uses Playwright's real
+   selectOption() API, unlike the custom checkbox-based dropdowns above).
+   Its <option> list is rendered INLINE (not as a floating popup), so the
+   earlier white-popup/dark-popup contrast bugs don't apply here - but it
+   still needs explicit option colours since it sits in the dark card. */
+select.native-multiselect {
+  color: #eafff0;
+}
+select.native-multiselect option {
+  padding: 0.45rem 0.6rem;
+  color: var(--text, #1e293b);
+  background-color: #ffffff;
+}
+select.native-multiselect option:checked {
+  background: var(--anime-green, var(--primary));
+  color: #06210a;
+}
+
+/* ------------------------------------------------------------------------
+   "Hidden Bootstrap Dropdowns" card (locator-visibility practice card).
+   Same overflow:visible fix as #bootstrapDropdownsCard above, since these
+   dropdowns also render an absolutely-positioned .dropdown-menu popup that
+   must not be clipped by the card's default overflow:hidden. ------------- */
+#hiddenDropdownsCard {
+  overflow: visible;
+}
+#hiddenDropdownsCard::after {
+  inset: 0;
+  border-radius: var(--radius);
+}
+#hiddenDropdownsCard .grid {
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  row-gap: 2.75rem;
+  column-gap: 1.5rem;
+  align-items: start;
+}
+#hiddenDropdownsCard .dropdown {
+  min-width: 0;
+}
+#hiddenDropdownsCard .dropdown-toggle {
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* Each dropdown wrapper starts fully hidden and is only revealed by its
+   "Reveal Dropdown" button, so the toggle/menu isn't shown until then. */
+#hiddenDropdownsCard .dropdown[id$="DropdownWrapper"] > .dropdown {
+  margin-top: 0.6rem;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 10px;
+  background: #e2e8f0;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: var(--primary);
+  width: 0%;
+  transition: width 0.2s ease;
+}
+
+.sitemap-list a { display: block; padding: 0.4rem 0; }
+
+/* Global link colours: default browser blue/purple (visited) links are
+   unreadable against the night-black theme, so give all links a bright
+   anime-green colour (with a lighter tint once visited) instead. */
+a { color: var(--anime-green); }
+a:visited { color: #7dffb0; }
+a:hover { color: #ffffff; text-decoration-color: var(--anime-green); }
+a:active { color: var(--anime-green-dark); }
+
+.hover-reveal .hidden-content { display: none; }
+.hover-reveal:hover .hidden-content, .hover-reveal:focus-within .hidden-content { display: block; }
+
+[data-testid] { outline-offset: 2px; }
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+footer.app-footer {
+  text-align: center;
+  padding: 1rem;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+/* Advanced Elements page */
+.accordion-header {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: #f1f5f9;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+
+.accordion-header[aria-expanded="true"] { background: var(--primary); color: #fff; }
+
+.accordion-panel {
+  padding: 0.75rem;
+  border: 1px solid var(--border);
+  border-top: none;
+  margin-bottom: 6px;
+}
+
+.star {
+  font-size: 1.75rem;
+  cursor: pointer;
+  color: #cbd5e1;
+  user-select: none;
+}
+
+.star.selected { color: #eab308; }
+
+[role="tab"] {
+  background: #f1f5f9;
+  color: var(--text);
+  margin-right: 4px;
+}
+
+[role="tab"][aria-selected="true"] { background: var(--primary); color: #fff; }
+
+[role="tabpanel"] {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.reorder-dragging { opacity: 0.5; }
+
+/* Drag-and-drop source/target chips: glossy anime-green source (dark text
+   for contrast) and a dashed neon-green drop target on the night-black
+   card background — replaces the old light-lavender inline styles that
+   were unreadable against the dark theme. */
+.drag-drop-source {
+  background: linear-gradient(135deg, var(--anime-green), var(--anime-green-dark));
+  color: #06210a;
+  font-weight: 600;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 2px 8px rgba(0,0,0,0.35), 0 0 10px var(--anime-green-glow);
+}
+.drag-drop-target {
+  border: 2px dashed var(--night-border);
+  color: #eafff0;
+  background: rgba(57, 255, 20, 0.06);
+}
+
+.stock-badge {
+  display: inline-block;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin: 0 0.5rem 0.5rem 0;
+}
+.stock-badge.in-stock { background: color-mix(in srgb, var(--anime-green) 30%, var(--night-black-2)); color: #eafff0; }
+.stock-badge.out-of-stock { background: color-mix(in srgb, #ff5c5c 30%, var(--night-black-2)); color: #ffdada; }
+
+/* Official Playwright doc description shown under each locator section title */
+.locator-desc {
+  font-size: 0.85rem;
+  font-style: italic;
+  color: #b8c4c9;
+  margin: -0.4rem 0 0.85rem;
+}
+.locator-desc code {
+  background: rgba(57, 255, 20, 0.12);
+  color: var(--anime-green);
+  padding: 0.05rem 0.35rem;
+  border-radius: 4px;
+  font-style: normal;
+}
+
+/* ============================================================
+   � Shiny "night black" theme
+   Every structural section/card/panel/table/tab is filled with a
+   glossy, near-black gradient (subtle blue-black sheen, like glass
+   over obsidian). ALL buttons/tabs/toggle-pills share one signature
+   "anime green" neon colour. Text colour is switched to light on
+   dark backgrounds so everything stays readable (WCAG-friendly).
+   ============================================================ */
+
+:root {
+  --night-black-1: #0b0f14;
+  --night-black-2: #12181f;
+  --night-black-3: #1a222b;
+  --night-sheen: rgba(255, 255, 255, 0.06);
+  --night-border: rgba(57, 255, 20, 0.35);
+
+  /* "Anime green" neon accent used for every button/tab/pill */
+  --anime-green: #39ff14;
+  --anime-green-dark: #1fae06;
+  --anime-green-glow: rgba(57, 255, 20, 0.55);
+
+  /* Kept for any leftover references elsewhere */
+  --glossy-hue-01: var(--anime-green); --glossy-hue-02: var(--anime-green); --glossy-hue-03: var(--anime-green);
+  --glossy-hue-04: var(--anime-green); --glossy-hue-05: var(--anime-green); --glossy-hue-06: var(--anime-green);
+  --glossy-hue-07: var(--anime-green); --glossy-hue-08: var(--anime-green); --glossy-hue-09: var(--anime-green);
+  --glossy-hue-10: var(--anime-green); --glossy-hue-11: var(--anime-green); --glossy-hue-12: var(--anime-green);
+}
+
+.card {
+  border-width: 2px;
+  border-style: solid;
+}
+
+/* Every top-level section/card is filled with a shiny near-black gradient
+   (glass over obsidian) plus a neon-green glow ring, so there is no plain
+   white panel anywhere. Text inside becomes light for readability. */
+main.container > section.card,
+.card {
+  position: relative;
+  overflow: hidden;
+  color: #eafff0;
+  border-color: var(--night-border);
+  box-shadow: var(--shadow), 0 0 0 1px var(--night-border), 0 10px 26px -12px rgba(57,255,20,0.35);
+  background:
+    linear-gradient(160deg, var(--night-sheen) 0%, rgba(255,255,255,0.02) 45%, rgba(0,0,0,0.1) 100%),
+    linear-gradient(160deg, var(--night-black-3) 0%, var(--night-black-2) 55%, var(--night-black-1) 100%);
+}
+
+main.container > section.card h1, main.container > section.card h2, main.container > section.card h3,
+main.container > section.card h4, main.container > section.card p, main.container > section.card label,
+main.container > section.card span, main.container > section.card li, main.container > section.card td,
+.card h1, .card h2, .card h3, .card h4, .card p, .card label, .card span, .card li {
+  color: #eafff0;
+}
+
+/* Table headers sit on a bright green background (not the dark card fill),
+   so they need dark text for contrast — this must win over the light-text
+   rule above, which only targets card text, not the green th background. */
+main.container > section.card table th,
+.card table th {
+  color: #06210a;
+}
+
+/* Glossy neon top-edge highlight bar on every card */
+main.container > section.card::before {
+  background: linear-gradient(90deg, var(--anime-green), var(--anime-green-dark), var(--anime-green));
+  opacity: 0.9;
+}
+
+/* Faint drifting sheen keeps working, just recoloured to a cool glass tint */
+main.container > section.card::after {
+  background:
+    radial-gradient(1.5px 1.5px at 15% 20%, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1.5px 1.5px at 70% 60%, rgba(57,255,20,0.35), transparent),
+    radial-gradient(1px 1px at 40% 80%, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 85% 15%, rgba(57,255,20,0.25), transparent);
+}
+
+main.container > section.card:hover,
+.card:hover {
+  box-shadow: var(--shadow), 0 0 22px var(--anime-green-glow), 0 14px 30px -10px rgba(0,0,0,0.6);
+}
+
+/* --- Anime-green glossy button look, reused everywhere (buttons, tabs,
+   pills, accordion headers). One single signature colour for every
+   interactive control, with text colour chosen for contrast (dark text
+   on the bright green). --- */
+.glossy-btn-base, button, .btn,
+.gold-graph-range-btn, .gold-weekly-monthly-toggle-btn,
+[role="tab"], .accordion-header {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(0,0,0,0.25);
+  color: #06210a;
+  background: linear-gradient(135deg, var(--anime-green) 0%, var(--anime-green-dark) 100%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.55), inset 0 -6px 10px -6px rgba(0,0,0,0.35), 0 2px 8px rgba(0,0,0,0.35), 0 0 10px var(--anime-green-glow);
+  text-shadow: 0 1px 0 rgba(255,255,255,0.25);
+  transition: filter 0.2s ease, transform 0.15s ease, box-shadow 0.25s ease;
+}
+.glossy-btn-base::after, button::after, .btn::after,
+.gold-graph-range-btn::after, .gold-weekly-monthly-toggle-btn::after,
+[role="tab"]::after, .accordion-header::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.08) 45%, rgba(255,255,255,0) 55%);
+  pointer-events: none;
+}
+button:hover:not(:disabled), .btn:hover,
+.gold-graph-range-btn:hover, .gold-weekly-monthly-toggle-btn:hover,
+[role="tab"]:hover, .accordion-header:hover {
+  filter: brightness(1.1) saturate(1.2);
+  transform: translateY(-1px);
+}
+button:active:not(:disabled), .btn:active { transform: translateY(0); filter: brightness(0.92); }
+button:disabled { background: #3a4048; color: #9aa5ad; box-shadow: none; }
+
+/* Keep the semantic status buttons distinct but still glossy/dark-text-safe */
+.btn-danger { background: linear-gradient(135deg, #ff5c5c, #c0392b); color: #fff; text-shadow: none; }
+.btn-success { background: linear-gradient(135deg, var(--anime-green), var(--anime-green-dark)); color: #06210a; }
+.btn-secondary { background: linear-gradient(135deg, #64748b, #334155); color: #fff; text-shadow: none; }
+
+/* Every plain <button>/pill/tab/accordion-header shares the single anime
+   green accent — no per-index hue cycling, just consistent neon green
+   with active/selected states glowing brighter. */
+button:not(.btn-danger):not(.btn-success):not(.btn-secondary):not(.gold-graph-range-btn):not(.gold-weekly-monthly-toggle-btn):not(.accordion-header) {
+  background: linear-gradient(135deg, var(--anime-green), var(--anime-green-dark));
+  color: #06210a;
+}
+
+/* Dynamic Start/Stop toggle button (dynamic.html) - explicit solid colours
+   with !important so they aren't masked by the global gradient `button`
+   background-image rule above. */
+button.btn-start {
+  background: #28a745 !important;
+  color: #fff !important;
+}
+button.btn-stop {
+  background: #dc3545 !important;
+  color: #fff !important;
+}
+
+.gold-graph-range-btn, .gold-weekly-monthly-toggle-btn {
+  background: linear-gradient(135deg, var(--anime-green), var(--anime-green-dark));
+  color: #06210a;
+  border-radius: 999px;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+.gold-graph-range-btn:hover, .gold-weekly-monthly-toggle-btn:hover { opacity: 1; transform: translateY(-1px); }
+.gold-graph-range-btn.active, .gold-weekly-monthly-toggle-btn.active {
+  opacity: 1;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 0 16px var(--anime-green-glow), 0 2px 8px rgba(0,0,0,0.35);
+  filter: saturate(1.3) brightness(1.08);
+}
+
+/* [role="tab"] elements share the same green, selected tab glows brighter */
+[role="tab"] {
+  background: linear-gradient(135deg, var(--anime-green), var(--anime-green-dark));
+  color: #06210a;
+  margin-right: 4px;
+}
+[role="tab"][aria-selected="true"] {
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 0 16px var(--anime-green-glow), 0 2px 8px rgba(0,0,0,0.35);
+  filter: saturate(1.3) brightness(1.08);
+}
+
+.accordion-header {
+  background: linear-gradient(135deg, var(--anime-green), var(--anime-green-dark));
+  color: #06210a;
+}
+.accordion-header[aria-expanded="true"] {
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 0 16px var(--anime-green-glow), 0 2px 8px rgba(0,0,0,0.35);
+}
+
+/* Accordion/tab CONTENT panels get the same shiny night-black fill as
+   cards (no plain white anywhere), with light text for readability. */
+.accordion-panel {
+  background: linear-gradient(160deg, var(--night-black-3), var(--night-black-1));
+  color: #eafff0;
+  border-color: var(--night-border);
+}
+.accordion-panel * { color: #eafff0; }
+
+[role="tabpanel"] {
+  background: linear-gradient(160deg, var(--night-black-3), var(--night-black-1));
+  color: #eafff0;
+  border-color: var(--night-border);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.35);
+}
+[role="tabpanel"] * { color: #eafff0; }
+
+/* --- Tables: dark glossy header in anime green, near-black glossy rows --- */
+table {
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+}
+table thead tr { position: relative; }
+table th {
+  background: linear-gradient(180deg, rgba(255,255,255,0.3), rgba(255,255,255,0) 60%),
+              linear-gradient(135deg, var(--anime-green), var(--anime-green-dark));
+  color: #06210a;
+  font-weight: 700;
+  border-bottom: none;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.35);
+}
+
+table tbody tr {
+  background: linear-gradient(160deg, var(--night-black-3), var(--night-black-2));
+  color: #eafff0;
+}
+table tbody tr:nth-child(even) {
+  background: linear-gradient(160deg, var(--night-black-2), var(--night-black-1));
+}
+table td { border-bottom: 1px solid rgba(57,255,20,0.15); }
+table tbody tr:hover { filter: brightness(1.25); box-shadow: inset 0 0 12px var(--anime-green-glow); }
+
+/* --- Page chrome: header/nav match the shiny night-black look --- */
+body {
+  background:
+    radial-gradient(1200px 600px at 10% -10%, rgba(57,255,20,0.06), transparent 60%),
+    radial-gradient(1200px 600px at 90% 110%, rgba(57,255,20,0.05), transparent 60%),
+    var(--night-black-1);
+}
+
+header.app-header {
+  background: linear-gradient(135deg, var(--night-black-2), var(--night-black-1));
+  color: #eafff0;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.08);
+}
+
+nav.main-nav {
+  background: linear-gradient(180deg, var(--night-black-3), var(--night-black-2));
+  box-shadow: 0 2px 10px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.06);
+  border-bottom: 2px solid var(--night-border);
+}
+
+nav.main-nav a {
+  color: #eafff0;
+  border: 1px solid transparent;
+  transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+}
+nav.main-nav a:hover {
+  background: linear-gradient(135deg, var(--anime-green), var(--anime-green-dark));
+  color: #06210a;
+}
+nav.main-nav a[aria-current="page"] {
+  background: linear-gradient(135deg, var(--anime-green), var(--anime-green-dark));
+  color: #06210a;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 0 12px var(--anime-green-glow);
+}
+
+/* Inputs/selects/textareas: dark glass fields with green focus glow so
+   they match the night-black sections instead of looking like white gaps */
+input[type="text"], input[type="password"], input[type="email"], input[type="number"],
+input[type="tel"], input[type="url"], input[type="search"], input[type="date"],
+input[type="datetime-local"], input[type="color"], textarea, select {
+  background: linear-gradient(160deg, var(--night-black-3), var(--night-black-2));
+  color: #eafff0;
+  border: 1px solid var(--night-border);
+}
+input::placeholder, textarea::placeholder { color: #9fb8a6; }
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--anime-green-glow);
+}
+input:disabled, textarea:disabled, select:disabled { background: #23292f; color: #6b7680; }
+
+/* ------------------------------------------------------------------------
+   Fix: the native <option> popup list rendered by the browser for a
+   <select> almost always ignores the element's own background gradient
+   and falls back to a plain white popup - but it INHERITS the light
+   "#eafff0" text colour set above for dark-theme selects, so every
+   option appeared as near-invisible light text on a white background
+   (see forms.html "Address & Location Detection" country/state/city
+   dropdowns). Force explicit, high-contrast colours directly on
+   <option>/<optgroup> so the open dropdown list is always readable,
+   regardless of what the closed <select> box looks like. -------------- */
+select option {
+  color: var(--text);
+  background-color: #ffffff;
+  padding: 0.4rem 0.6rem;
+}
+select option:checked,
+select option:hover,
+select option:focus {
+  color: #ffffff;
+  background-color: var(--primary);
+}
+select optgroup {
+  color: var(--text-muted);
+  background-color: #ffffff;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.badge { background: color-mix(in srgb, var(--anime-green) 25%, var(--night-black-2)); color: #eafff0; }
+
+main.container { position: relative; }
+

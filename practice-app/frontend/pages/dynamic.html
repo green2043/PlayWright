@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dynamic Content - Playwright Practice App</title>
+  <link rel="stylesheet" href="../css/styles.css" />
+</head>
+<body>
+  <header class="app-header"><h1>🎭 Playwright Practice App</h1></header>
+  <nav class="main-nav" aria-label="Main navigation">
+    <a href="index.html">Home</a>
+    <a href="forms.html">Forms</a>
+    <a href="tables.html">Tables</a>
+    <a href="popups.html">Popups &amp; Dialogs</a>
+    <a href="iframes.html">iFrames</a>
+    <a href="dynamic.html" aria-current="page">Dynamic Content</a>
+    <a href="shadow-dom.html">Shadow DOM</a>
+    <a href="locators.html">Locator Playground</a>
+    <a href="file-upload.html">Files</a>
+    <a href="child/child-page-1.html" target="_blank" rel="noopener">Child Pages</a>
+    <a href="api-playground.html">API Playground</a>
+    <a href="advanced.html">Advanced Elements</a>
+  </nav>
+
+  <main class="container">
+    <section class="card">
+      <h2>Delayed Appear/Disappear Element</h2>
+      <button id="showDelayedBtn" data-testid="btn-show-delayed">Show Element After 2s</button>
+      <p id="delayedElement" data-testid="delayed-element" hidden>🎉 I appeared after a 2 second delay!</p>
+    </section>
+
+    <section class="card">
+      <h2>Loading Spinners</h2>
+      <button id="loadSpinnerBtn" data-testid="btn-load-spinner">Simulate Loading</button>
+      <div id="spinnerContainer" data-testid="spinner-container"></div>
+    </section>
+
+    <section class="card">
+      <h2>Skeleton Loader</h2>
+      <button id="loadSkeletonBtn" data-testid="btn-load-skeleton">Load Content</button>
+      <div id="skeletonContainer" data-testid="skeleton-container">
+        <div class="skeleton" style="width:100%; margin-bottom:0.5rem;"></div>
+        <div class="skeleton" style="width:80%;"></div>
+      </div>
+      <div id="loadedContent" data-testid="loaded-content" hidden>✅ Content has finished loading!</div>
+    </section>
+
+    <section class="card">
+      <h2>Progress Bar (dynamic updates)</h2>
+      <button id="startProgressBtn" data-testid="btn-start-progress">Start Progress</button>
+      <div class="progress-bar"><div id="progressFill" class="progress-bar-fill" data-testid="progress-fill"></div></div>
+      <p id="progressText" data-testid="progress-text">0%</p>
+    </section>
+
+    <section class="card">
+      <h2>Native Progress &amp; Meter Elements</h2>
+      <label for="nativeProgress">Native &lt;progress&gt;</label>
+      <progress id="nativeProgress" data-testid="native-progress" value="65" max="100"></progress>
+      <label for="nativeMeter">Native &lt;meter&gt;</label>
+      <meter id="nativeMeter" data-testid="native-meter" value="0.6" min="0" max="1"></meter>
+    </section>
+
+    <section class="card">
+      <h2>Lazy-Loaded Images</h2>
+      <div class="grid">
+        <img data-testid="lazy-image-1" loading="lazy" width="200" height="120" src="https://picsum.photos/seed/one/200/120" alt="Lazy loaded scenic photo one" />
+        <img data-testid="lazy-image-2" loading="lazy" width="200" height="120" src="https://picsum.photos/seed/two/200/120" alt="Lazy loaded scenic photo two" />
+        <img data-testid="broken-image" src="https://example.com/does-not-exist.png" alt="This image is intentionally broken" />
+        <img data-testid="decorative-image" src="https://picsum.photos/seed/deco/100/60" alt="" />
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Infinite Scroll List</h2>
+      <div id="infiniteScrollContainer" data-testid="infinite-scroll-container" style="height:200px; overflow-y:auto; border:1px solid var(--border); border-radius:6px; padding:0.5rem;">
+        <ul id="infiniteScrollList" data-testid="infinite-scroll-list"></ul>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Native Date Picker</h2>
+      <label for="nativeDatePicker">Pick a date</label>
+      <input type="date" id="nativeDatePicker" data-testid="native-date-picker" />
+    </section>
+
+    <section class="card">
+      <h2>Custom Calendar Widget (month/year navigation)</h2>
+      <div id="customCalendar" data-testid="custom-calendar">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <button id="prevMonthBtn" data-testid="calendar-prev-month">&laquo; Prev</button>
+          <span id="calendarMonthYear" data-testid="calendar-month-year"></span>
+          <button id="nextMonthBtn" data-testid="calendar-next-month">Next &raquo;</button>
+        </div>
+        <div id="calendarGrid" data-testid="calendar-grid" style="display:grid; grid-template-columns:repeat(7, 1fr); gap:4px; margin-top:0.5rem; text-align:center;"></div>
+        <p id="selectedDate" data-testid="calendar-selected-date"></p>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Dynamic Toggle Button (Start/Stop)</h2>
+      <button id="toggleStartStopBtn" name="startState" data-testid="btn-toggle-start-stop" class="btn-start" style="padding:0.6rem 1.2rem; border-radius:6px; font-weight:bold; cursor:pointer;">START</button>
+    </section>
+
+    <section class="card">
+      <h2>Elements Requiring Scroll-Into-View</h2>
+      <div style="height:150px; overflow-y:auto; border:1px solid var(--border); border-radius:6px; padding:0.5rem;" data-testid="scroll-container">
+        <div style="height:400px;">Scroll down inside this box...</div>
+        <button data-testid="scroll-target-button">🎯 You found the scroll target!</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Dynamically-Loaded Dropdown (options arrive after a delay)</h2>
+      <p style="margin-top:-0.5rem; color: var(--text-muted); font-size: 0.85rem;">
+        The dropdown starts disabled with a placeholder option; clicking "Load Options" simulates a
+        network call that populates it ~1.5s later - practise Playwright's auto-waiting for
+        the <code>disabled</code> attribute to clear and for new <code>&lt;option&gt;</code> elements to appear.
+      </p>
+      <label for="dynamicCategorySelect">Product Category</label>
+      <select id="dynamicCategorySelect" name="dynamicCategorySelect" class="ajax-select" type="select-one"
+              data-testid="select-dynamic-category" aria-label="Product category" disabled>
+        <option value="">-- Click "Load Options" first --</option>
+      </select>
+      <button type="button" id="loadCategoryOptionsBtn" name="loadCategoryOptionsBtn" class="btn"
+              data-testid="btn-load-category-options" aria-controls="dynamicCategorySelect">
+        Load Options
+      </button>
+      <span id="dynamicCategorySpinner" class="spinner" data-testid="dynamic-category-spinner" hidden aria-label="Loading categories"></span>
+    </section>
+
+    <section class="card">
+      <h2>Cascading (Dependent) Dropdowns</h2>
+      <p style="margin-top:-0.5rem; color: var(--text-muted); font-size: 0.85rem;">
+        Selecting a Continent dynamically repopulates the Country dropdown, and selecting a Country
+        dynamically repopulates the City dropdown - each downstream dropdown resets/disables itself
+        until its parent has a valid selection.
+      </p>
+      <div class="grid">
+        <div>
+          <label for="cascadeContinent">Continent</label>
+          <select id="cascadeContinent" name="cascadeContinent" class="ajax-select" type="select-one"
+                  data-testid="select-cascade-continent" aria-label="Continent">
+            <option value="">-- Select a continent --</option>
+            <option value="asia">Asia</option>
+            <option value="europe">Europe</option>
+            <option value="namerica">North America</option>
+          </select>
+        </div>
+        <div>
+          <label for="cascadeCountry">Country</label>
+          <select id="cascadeCountry" name="cascadeCountry" class="ajax-select" type="select-one"
+                  data-testid="select-cascade-country" aria-label="Country" disabled>
+            <option value="">-- Select a continent first --</option>
+          </select>
+        </div>
+        <div>
+          <label for="cascadeCity">City</label>
+          <select id="cascadeCity" name="cascadeCity" class="ajax-select" type="select-one"
+                  data-testid="select-cascade-city" aria-label="City" disabled>
+            <option value="">-- Select a country first --</option>
+          </select>
+        </div>
+      </div>
+      <p id="cascadeSelectionSummary" data-testid="cascade-selection-summary" aria-live="polite"></p>
+    </section>
+  </main>
+
+  <footer class="app-footer">Playwright Practice App &mdash; for local training use only.</footer>
+  <script type="module" src="../ts/common.js"></script>
+  <script type="module" src="../ts/dynamic.js"></script>
+</body>
+</html>

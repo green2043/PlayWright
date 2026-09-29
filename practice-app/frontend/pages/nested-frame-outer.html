@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Outer Frame</title>
+  <link rel="stylesheet" href="../css/styles.css" />
+</head>
+<body>
+  <div class="card" style="margin:1rem;">
+    <h3>Outer Frame (contains a nested iframe below)</h3>
+    <p data-testid="outer-frame-text">This text lives in the outer (nested) iframe.</p>
+    <iframe src="nested-frame-content.html" title="Nested inner frame" data-testid="nested-iframe" width="100%" height="150" style="border:1px solid var(--border); border-radius:6px;"></iframe>
+  </div>
+</body>
+</html>

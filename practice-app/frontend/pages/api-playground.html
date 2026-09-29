@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>API Playground - Playwright Practice App</title>
+  <link rel="stylesheet" href="../css/styles.css" />
+</head>
+<body>
+  <header class="app-header"><h1>🎭 Playwright Practice App</h1></header>
+  <nav class="main-nav" aria-label="Main navigation">
+    <a href="index.html">Home</a>
+    <a href="forms.html">Forms</a>
+    <a href="tables.html">Tables</a>
+    <a href="popups.html">Popups &amp; Dialogs</a>
+    <a href="iframes.html">iFrames</a>
+    <a href="dynamic.html">Dynamic Content</a>
+    <a href="shadow-dom.html">Shadow DOM</a>
+    <a href="locators.html">Locator Playground</a>
+    <a href="file-upload.html">Files</a>
+    <a href="child/child-page-1.html" target="_blank" rel="noopener">Child Pages</a>
+    <a href="api-playground.html" aria-current="page">API Playground</a>
+    <a href="advanced.html">Advanced Elements</a>
+  </nav>
+
+  <main class="container">
+    <section class="card">
+      <h2>Login</h2>
+      <label for="loginUsername">Username</label>
+      <input type="text" id="loginUsername" value="admin" data-testid="api-login-username" />
+      <label for="loginPassword">Password</label>
+      <input type="password" id="loginPassword" value="Admin@123" data-testid="api-login-password" />
+      <button id="loginBtn" data-testid="api-login-btn">Login &amp; Get Token</button>
+      <p id="tokenDisplay" data-testid="api-token-display" style="word-break:break-all;"></p>
+    </section>
+
+    <section class="card">
+      <h2>Quick API Calls</h2>
+      <button data-endpoint="/api/users" data-method="GET" class="api-call-btn" data-testid="api-btn-get-users">GET /api/users</button>
+      <button data-endpoint="/api/products?page=1&limit=5" data-method="GET" class="api-call-btn" data-testid="api-btn-get-products">GET /api/products</button>
+      <button data-endpoint="/api/orders" data-method="GET" data-auth="true" class="api-call-btn" data-testid="api-btn-get-orders">GET /api/orders (auth)</button>
+      <button data-endpoint="/api/misc/status/404" data-method="GET" class="api-call-btn" data-testid="api-btn-status-404">GET status 404</button>
+      <button data-endpoint="/api/misc/status/500" data-method="GET" class="api-call-btn" data-testid="api-btn-status-500">GET status 500</button>
+      <button data-endpoint="/api/misc/nested" data-method="GET" class="api-call-btn" data-testid="api-btn-nested">GET nested JSON</button>
+      <button data-endpoint="/api/products/slow?delay=2000" data-method="GET" class="api-call-btn" data-testid="api-btn-slow">GET slow endpoint (2s)</button>
+    </section>
+
+    <section class="card">
+      <h2>Response</h2>
+      <pre id="apiResponse" data-testid="api-response" style="background:#0f172a; color:#e2e8f0; padding:1rem; border-radius:6px; overflow:auto; max-height:400px;">No request made yet.</pre>
+    </section>
+  </main>
+
+  <footer class="app-footer">Playwright Practice App &mdash; for local training use only.</footer>
+  <script type="module" src="../ts/common.js"></script>
+  <script type="module" src="../ts/api-playground.js"></script>
+</body>
+</html>

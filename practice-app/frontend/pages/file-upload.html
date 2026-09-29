@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>File Upload/Download - Playwright Practice App</title>
+  <link rel="stylesheet" href="../css/styles.css" />
+</head>
+<body>
+  <header class="app-header"><h1>🎭 Playwright Practice App</h1></header>
+  <nav class="main-nav" aria-label="Main navigation">
+    <a href="index.html">Home</a>
+    <a href="forms.html">Forms</a>
+    <a href="tables.html">Tables</a>
+    <a href="popups.html">Popups &amp; Dialogs</a>
+    <a href="iframes.html">iFrames</a>
+    <a href="dynamic.html">Dynamic Content</a>
+    <a href="shadow-dom.html">Shadow DOM</a>
+    <a href="locators.html">Locator Playground</a>
+    <a href="file-upload.html" aria-current="page">Files</a>
+    <a href="child/child-page-1.html" target="_blank" rel="noopener">Child Pages</a>
+    <a href="api-playground.html">API Playground</a>
+    <a href="advanced.html">Advanced Elements</a>
+  </nav>
+
+  <main class="container">
+    <section class="card">
+      <h2>Single File Upload</h2>
+      <form id="singleUploadForm" data-testid="single-upload-form">
+        <label for="singleFileInput">Choose a file</label>
+        <input type="file" id="singleFileInput" name="file" data-testid="single-file-input" />
+        <button type="submit" data-testid="btn-upload-single">Upload</button>
+      </form>
+      <p id="singleUploadResult" data-testid="single-upload-result"></p>
+    </section>
+
+    <section class="card">
+      <h2>Multiple File Upload</h2>
+      <form id="multiUploadForm" data-testid="multi-upload-form">
+        <label for="multiFileInput">Choose multiple files</label>
+        <input type="file" id="multiFileInput" name="files" multiple data-testid="multi-file-input" />
+        <button type="submit" data-testid="btn-upload-multiple">Upload All</button>
+      </form>
+      <p id="multiUploadResult" data-testid="multi-upload-result"></p>
+    </section>
+
+    <section class="card">
+      <h2>Drag &amp; Drop File Upload</h2>
+      <div id="dropZone" data-testid="file-drop-zone"
+           style="padding:2rem; border:2px dashed var(--border); border-radius:6px; text-align:center;">
+        Drag and drop a file here (or click to browse)
+        <input type="file" id="dropZoneInput" data-testid="drop-zone-file-input" style="display:none;" />
+      </div>
+      <p id="dropZoneResult" data-testid="drop-zone-result"></p>
+    </section>
+
+    <section class="card">
+      <h2>File Downloads</h2>
+      <a href="/api/files/download/txt" data-testid="download-txt" download>Download .txt</a> |
+      <a href="/api/files/download/csv" data-testid="download-csv" download>Download .csv</a> |
+      <a href="/api/files/download/json" data-testid="download-json" download>Download .json</a> |
+      <a href="/api/files/download/pdf" data-testid="download-pdf" download>Download .pdf</a>
+    </section>
+  </main>
+
+  <footer class="app-footer">Playwright Practice App &mdash; for local training use only.</footer>
+  <script type="module" src="../ts/common.js"></script>
+  <script type="module" src="../ts/file-upload.js"></script>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Popups - Playwright Practice App</title>
+  <link rel="stylesheet" href="../css/styles.css" />
+</head>
+<body>
+  <header class="app-header"><h1>🎭 Playwright Practice App</h1></header>
+  <nav class="main-nav" aria-label="Main navigation">
+    <a href="index.html">Home</a>
+    <a href="forms.html">Forms</a>
+    <a href="tables.html">Tables</a>
+    <a href="popups.html" aria-current="page">Popups &amp; Dialogs</a>
+    <a href="iframes.html">iFrames</a>
+    <a href="dynamic.html">Dynamic Content</a>
+    <a href="shadow-dom.html">Shadow DOM</a>
+    <a href="locators.html">Locator Playground</a>
+    <a href="file-upload.html">Files</a>
+    <a href="child/child-page-1.html" target="_blank" rel="noopener">Child Pages</a>
+    <a href="api-playground.html">API Playground</a>
+    <a href="advanced.html">Advanced Elements</a>
+  </nav>
+
+  <main class="container">
+    <section class="card">
+      <h2>Native Browser Dialogs</h2>
+      <button id="alertBtn" data-testid="btn-native-alert">Trigger alert()</button>
+      <button id="confirmBtn" data-testid="btn-native-confirm">Trigger confirm()</button>
+      <button id="promptBtn" data-testid="btn-native-prompt">Trigger prompt()</button>
+      <p id="nativeDialogResult" data-testid="native-dialog-result"></p>
+    </section>
+
+    <section class="card">
+      <h2>Custom Modal Dialog</h2>
+      <button id="openModalBtn" data-testid="btn-open-modal">Open Modal</button>
+    </section>
+
+    <section class="card">
+      <h2>Nested Modal Dialogs</h2>
+      <button id="openParentModalBtn" data-testid="btn-open-parent-modal">Open Parent Modal</button>
+    </section>
+
+    <section class="card">
+      <h2>Native &lt;dialog&gt; Element</h2>
+      <button id="openNativeDialogBtn" data-testid="btn-open-native-dialog">Open Native Dialog</button>
+      <dialog id="nativeDialog" data-testid="native-dialog">
+        <p>This is a native HTML &lt;dialog&gt; element.</p>
+        <button id="closeNativeDialogBtn" data-testid="btn-close-native-dialog">Close</button>
+      </dialog>
+    </section>
+
+    <section class="card">
+      <h2>Toast / Snackbar Notifications</h2>
+      <button id="toastInfoBtn" data-testid="btn-toast-info">Show Info Toast</button>
+      <button id="toastSuccessBtn" data-testid="btn-toast-success">Show Success Toast</button>
+      <button id="toastErrorBtn" data-testid="btn-toast-error">Show Error Toast</button>
+    </section>
+
+    <section class="card">
+      <h2>Tooltip (hover-reveal)</h2>
+      <div class="hover-reveal" tabindex="0" data-testid="hover-reveal-widget">
+        Hover or focus me to reveal hidden content
+        <div class="hidden-content" data-testid="hover-reveal-content">🎉 Hidden content revealed!</div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Right-Click Context Menu</h2>
+      <div id="contextMenuTarget" data-testid="context-menu-target"
+           style="padding:1rem;border:1px dashed var(--border);border-radius:6px;">
+        Right-click inside this box
+      </div>
+      <ul id="customContextMenu" data-testid="custom-context-menu" hidden
+          style="position:absolute; background:#fff; border:1px solid var(--border); border-radius:6px; list-style:none; padding:0.5rem; box-shadow: var(--shadow);">
+        <li data-testid="context-menu-copy" style="padding:0.3rem 0.6rem; cursor:pointer;">Copy</li>
+        <li data-testid="context-menu-paste" style="padding:0.3rem 0.6rem; cursor:pointer;">Paste</li>
+        <li data-testid="context-menu-delete" style="padding:0.3rem 0.6rem; cursor:pointer;">Delete</li>
+      </ul>
+    </section>
+  </main>
+
+  <!-- Custom Modal -->
+  <div class="modal-overlay" id="customModalOverlay" hidden data-testid="custom-modal-overlay">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="customModalTitle" data-testid="custom-modal">
+      <h3 id="customModalTitle">Custom Modal Title</h3>
+      <p>This is a fully custom modal dialog built with divs, not the native &lt;dialog&gt; element.</p>
+      <button id="closeCustomModalBtn" data-testid="btn-close-custom-modal">Close</button>
+    </div>
+  </div>
+
+  <!-- Nested Modals -->
+  <div class="modal-overlay" id="parentModalOverlay" hidden data-testid="parent-modal-overlay">
+    <div class="modal" role="dialog" aria-modal="true" data-testid="parent-modal">
+      <h3>Parent Modal</h3>
+      <p>This modal can open another modal on top of itself.</p>
+      <button id="openChildModalBtn" data-testid="btn-open-child-modal">Open Child Modal</button>
+      <button id="closeParentModalBtn" data-testid="btn-close-parent-modal">Close</button>
+    </div>
+  </div>
+  <div class="modal-overlay" id="childModalOverlay" hidden data-testid="child-modal-overlay">
+    <div class="modal" role="dialog" aria-modal="true" data-testid="child-modal">
+      <h3>Child (Nested) Modal</h3>
+      <p>This is nested inside the parent modal flow.</p>
+      <button id="closeChildModalBtn" data-testid="btn-close-child-modal">Close</button>
+    </div>
+  </div>
+
+  <footer class="app-footer">Playwright Practice App &mdash; for local training use only.</footer>
+  <script type="module" src="../ts/common.js"></script>
+  <script type="module" src="../ts/popups.js"></script>
+</body>
+</html>

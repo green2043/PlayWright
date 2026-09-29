@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shadow DOM - Playwright Practice App</title>
+  <link rel="stylesheet" href="../css/styles.css" />
+</head>
+<body>
+  <header class="app-header"><h1>🎭 Playwright Practice App</h1></header>
+  <nav class="main-nav" aria-label="Main navigation">
+    <a href="index.html">Home</a>
+    <a href="forms.html">Forms</a>
+    <a href="tables.html">Tables</a>
+    <a href="popups.html">Popups &amp; Dialogs</a>
+    <a href="iframes.html">iFrames</a>
+    <a href="dynamic.html">Dynamic Content</a>
+    <a href="shadow-dom.html" aria-current="page">Shadow DOM</a>
+    <a href="locators.html">Locator Playground</a>
+    <a href="file-upload.html">Files</a>
+    <a href="child/child-page-1.html" target="_blank" rel="noopener">Child Pages</a>
+    <a href="api-playground.html">API Playground</a>
+    <a href="advanced.html">Advanced Elements</a>
+  </nav>
+
+  <main class="container">
+    <section class="card">
+      <h2>Custom Web Component with Shadow DOM</h2>
+      <p>The element below (<code>&lt;practice-counter&gt;</code>) renders its internal button/count inside an
+        open Shadow Root. Playwright's <code>page.locator()</code> can pierce open shadow roots automatically.</p>
+      <practice-counter data-testid="shadow-counter"></practice-counter>
+    </section>
+
+    <section class="card">
+      <h2>Canvas &amp; SVG Elements</h2>
+      <canvas id="practiceCanvas" data-testid="practice-canvas" width="300" height="120" style="border:1px solid var(--border); border-radius:6px;"></canvas>
+      <svg data-testid="practice-svg" width="150" height="100" viewBox="0 0 150 100">
+        <circle cx="75" cy="50" r="40" fill="#2563eb" data-testid="svg-circle" />
+        <text x="75" y="55" text-anchor="middle" fill="#fff" font-size="12">SVG</text>
+      </svg>
+    </section>
+
+    <section class="card">
+      <h2>Drag and Drop Zone</h2>
+      <div style="display:flex; gap:1rem;">
+        <div id="dragSource" draggable="true" data-testid="drag-source"
+             class="drag-drop-source" style="padding:1rem; border-radius:6px; cursor:grab;">Drag me</div>
+        <div id="dropTarget" data-testid="drop-target"
+             class="drag-drop-target" style="padding:1rem; border-radius:6px; flex:1;">Drop here</div>
+      </div>
+      <p id="dragDropResult" data-testid="drag-drop-result"></p>
+    </section>
+
+    <section class="card">
+      <h2>&lt;details&gt; / &lt;summary&gt;</h2>
+      <details data-testid="details-widget">
+        <summary data-testid="details-summary">Click to expand for more info</summary>
+        <p>Here is the extra detail content that is revealed on expand.</p>
+      </details>
+    </section>
+  </main>
+
+  <footer class="app-footer">Playwright Practice App &mdash; for local training use only.</footer>
+  <script type="module" src="../ts/common.js"></script>
+  <script type="module" src="../ts/shadow-dom.js"></script>
+</body>
+</html>

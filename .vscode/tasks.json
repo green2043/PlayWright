@@ -1,0 +1,12 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Start frontend static server",
+			"type": "shell",
+			"command": "node_modules/.bin/http-server -p 5500 practice-app/frontend",
+			"isBackground": true,
+			"problemMatcher": []
+		}
+	]
+}

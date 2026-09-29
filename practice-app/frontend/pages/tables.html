@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tables - Playwright Practice App</title>
+  <link rel="stylesheet" href="../css/styles.css" />
+</head>
+<body>
+  <header class="app-header"><h1>🎭 Playwright Practice App</h1></header>
+  <nav class="main-nav" aria-label="Main navigation">
+    <a href="index.html">Home</a>
+    <a href="forms.html">Forms</a>
+    <a href="tables.html" aria-current="page">Tables</a>
+    <a href="popups.html">Popups &amp; Dialogs</a>
+    <a href="iframes.html">iFrames</a>
+    <a href="dynamic.html">Dynamic Content</a>
+    <a href="shadow-dom.html">Shadow DOM</a>
+    <a href="locators.html">Locator Playground</a>
+    <a href="file-upload.html">Files</a>
+    <a href="child/child-page-1.html" target="_blank" rel="noopener">Child Pages</a>
+    <a href="api-playground.html">API Playground</a>
+    <a href="advanced.html">Advanced Elements</a>
+  </nav>
+
+  <main class="container">
+    <section class="card">
+      <h2>Static Table</h2>
+      <table data-testid="static-table">
+        <thead><tr><th>ID</th><th>Name</th><th>Role</th></tr></thead>
+        <tbody>
+          <tr data-testid="static-row-1"><td>1</td><td>Alice Admin</td><td>Admin</td></tr>
+          <tr data-testid="static-row-2"><td>2</td><td>Bob User</td><td>User</td></tr>
+          <tr data-testid="static-row-3"><td>3</td><td>Carla Tester</td><td>User</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>Sortable Table (click column headers)</h2>
+      <table id="sortableTable" data-testid="sortable-table">
+        <thead>
+          <tr>
+            <th data-key="name" data-testid="sort-name">Name ⬍</th>
+            <th data-key="category" data-testid="sort-category">Category ⬍</th>
+            <th data-key="price" data-testid="sort-price">Price ⬍</th>
+          </tr>
+        </thead>
+        <tbody id="sortableTableBody"></tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>Paginated Table</h2>
+      <table id="paginatedTable" data-testid="paginated-table">
+        <thead><tr><th>#</th><th>Item</th></tr></thead>
+        <tbody id="paginatedTableBody"></tbody>
+      </table>
+      <div style="margin-top:0.75rem; display:flex; gap:0.5rem; align-items:center;">
+        <button id="prevPageBtn" data-testid="pagination-prev">Previous</button>
+        <span id="pageIndicator" data-testid="pagination-indicator">Page 1</span>
+        <button id="nextPageBtn" data-testid="pagination-next">Next</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Expandable Rows Table</h2>
+      <table data-testid="expandable-table">
+        <thead><tr><th></th><th>Order</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><button class="expand-toggle" data-target="detail-1" data-testid="expand-btn-1">+</button></td>
+            <td>Order #1001</td><td>Shipped</td>
+          </tr>
+          <tr id="detail-1" hidden data-testid="expand-detail-1"><td colspan="3">Items: Product A x2, Product B x1. Tracking: TRK123456.</td></tr>
+          <tr>
+            <td><button class="expand-toggle" data-target="detail-2" data-testid="expand-btn-2">+</button></td>
+            <td>Order #1002</td><td>Pending</td>
+          </tr>
+          <tr id="detail-2" hidden data-testid="expand-detail-2"><td colspan="3">Items: Product C x1. Awaiting payment confirmation.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>Inline-Editable Table</h2>
+      <table data-testid="editable-table">
+        <thead><tr><th>Name</th><th>Email</th><th>Action</th></tr></thead>
+        <tbody>
+          <tr data-testid="editable-row-1">
+            <td class="editable-cell" contenteditable="false" data-testid="editable-name-1">Dana Scully</td>
+            <td class="editable-cell" contenteditable="false" data-testid="editable-email-1">dana@example.com</td>
+            <td><button class="edit-row-btn" data-testid="edit-btn-1">Edit</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>Row-Selection Table (checkboxes)</h2>
+      <table data-testid="selection-table">
+        <thead><tr><th><input type="checkbox" id="selectAll" data-testid="select-all-checkbox" /></th><th>Name</th></tr></thead>
+        <tbody>
+          <tr><td><input type="checkbox" class="row-checkbox" data-testid="row-checkbox-1" /></td><td>Item One</td></tr>
+          <tr><td><input type="checkbox" class="row-checkbox" data-testid="row-checkbox-2" /></td><td>Item Two</td></tr>
+          <tr><td><input type="checkbox" class="row-checkbox" data-testid="row-checkbox-3" /></td><td>Item Three</td></tr>
+        </tbody>
+      </table>
+      <p id="selectionCount" data-testid="selection-count">0 selected</p>
+    </section>
+  </main>
+
+  <footer class="app-footer">Playwright Practice App &mdash; for local training use only.</footer>
+  <script type="module" src="../ts/common.js"></script>
+  <script type="module" src="../ts/tables.js"></script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Child Page 2 - Playwright Practice App</title>
+  <link rel="stylesheet" href="../../css/styles.css" />
+</head>
+<body>
+  <header class="app-header"><h1>🎭 Playwright Practice App</h1></header>
+  <nav class="main-nav" aria-label="Main navigation">
+    <a href="../index.html">Home</a>
+    <a href="../forms.html">Forms</a>
+    <a href="../tables.html">Tables</a>
+    <a href="../popups.html">Popups &amp; Dialogs</a>
+    <a href="../iframes.html">iFrames</a>
+    <a href="../dynamic.html">Dynamic Content</a>
+    <a href="../shadow-dom.html">Shadow DOM</a>
+    <a href="../locators.html">Locator Playground</a>
+    <a href="../file-upload.html">Files</a>
+    <a href="child-page-1.html" aria-current="page">Child Pages</a>
+    <a href="../api-playground.html">API Playground</a>
+  </nav>
+
+  <main class="container">
+    <section class="card">
+      <h2 data-testid="child-page-2-heading">Child Page 2 (Grandchild Navigation)</h2>
+      <p>This page was reached from Child Page 1. It demonstrates multi-level page navigation.</p>
+      <a href="child-page-3.html" data-testid="link-to-child-3">Go to Child Page 3 &rarr;</a>
+      <br /><br />
+      <a href="child-page-1.html" data-testid="link-back-to-child-1">&larr; Back to Child Page 1</a>
+    </section>
+  </main>
+  <footer class="app-footer">Playwright Practice App &mdash; for local training use only.</footer>
+</body>
+</html>

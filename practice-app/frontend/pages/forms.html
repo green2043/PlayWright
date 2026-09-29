@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Forms - Playwright Practice App</title>
+  <link rel="stylesheet" href="../css/styles.css" />
+</head>
+<body>
+  <header class="app-header">
+    <h1>🎭 Playwright Practice App</h1>
+  </header>
+  <nav class="main-nav" aria-label="Main navigation">
+    <a href="index.html">Home</a>
+    <a href="forms.html" aria-current="page">Forms</a>
+    <a href="tables.html">Tables</a>
+    <a href="popups.html">Popups &amp; Dialogs</a>
+    <a href="iframes.html">iFrames</a>
+    <a href="dynamic.html">Dynamic Content</a>
+    <a href="shadow-dom.html">Shadow DOM</a>
+    <a href="locators.html">Locator Playground</a>
+    <a href="file-upload.html">Files</a>
+    <a href="child/child-page-1.html" target="_blank" rel="noopener">Child Pages</a>
+    <a href="api-playground.html">API Playground</a>
+    <a href="advanced.html">Advanced Elements</a>
+  </nav>
+
+  <main class="container">
+    <section class="card">
+      <h2>All Form Controls</h2>
+      <form id="mega-form" data-testid="mega-form" novalidate>
+        <div class="grid">
+          <div>
+            <label for="fullName">Full Name</label>
+            <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" data-testid="input-fullname" required />
+          </div>
+          <div>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter a password" data-testid="input-password" minlength="6" required />
+          </div>
+          <div>
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="name@example.com" data-testid="input-email" required />
+          </div>
+          <div>
+            <label for="age">Age</label>
+            <input type="number" id="age" name="age" placeholder="e.g. 30" min="0" max="120" data-testid="input-age" />
+          </div>
+          <div>
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone" placeholder="+1 555 000 1234" data-testid="input-phone" />
+          </div>
+          <div>
+            <label for="website">Website</label>
+            <input type="url" id="website" name="website" placeholder="https://example.com" data-testid="input-url" />
+          </div>
+          <div>
+            <label for="searchBox">Search</label>
+            <input type="search" id="searchBox" name="searchBox" placeholder="Search something..." data-testid="input-search" />
+          </div>
+          <div>
+            <label for="birthDate">Birth Date</label>
+            <input type="date" id="birthDate" name="birthDate" data-testid="input-date" />
+          </div>
+          <div>
+            <label for="appointment">Appointment Date &amp; Time</label>
+            <input type="datetime-local" id="appointment" name="appointment" data-testid="input-datetime" />
+          </div>
+          <div>
+            <label for="favColor">Favorite Color</label>
+            <input type="color" id="favColor" name="favColor" value="#2563eb" data-testid="input-color" />
+          </div>
+          <div>
+            <label for="volume">Volume (range)</label>
+            <input type="range" id="volume" name="volume" min="0" max="100" value="50" data-testid="input-range" />
+          </div>
+          <div>
+            <label for="browserChoice">Favorite Browser (datalist)</label>
+            <input list="browsers" id="browserChoice" name="browserChoice" placeholder="Start typing..." data-testid="input-datalist" />
+            <datalist id="browsers">
+              <option value="Chromium"></option>
+              <option value="Firefox"></option>
+              <option value="WebKit"></option>
+              <option value="Edge"></option>
+            </datalist>
+          </div>
+        </div>
+
+        <label for="bio">Biography</label>
+        <textarea id="bio" name="bio" rows="4" placeholder="Tell us about yourself" data-testid="input-bio"></textarea>
+
+        <fieldset>
+          <legend>Gender</legend>
+          <label><input type="radio" name="gender" value="male" data-testid="radio-male" /> Male</label>
+          <label><input type="radio" name="gender" value="female" data-testid="radio-female" /> Female</label>
+          <label><input type="radio" name="gender" value="other" data-testid="radio-other" /> Other</label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Interests</legend>
+          <label><input type="checkbox" name="interests" value="coding" data-testid="checkbox-coding" /> Coding</label>
+          <label><input type="checkbox" name="interests" value="testing" data-testid="checkbox-testing" /> Testing</label>
+          <label><input type="checkbox" name="interests" value="reading" data-testid="checkbox-reading" checked /> Reading</label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Programming Languages</legend>
+          <label><input type="checkbox" name="languages" value="java" data-testid="checkbox-java" /> Java</label>
+          <label><input type="checkbox" name="languages" value="python" data-testid="checkbox-python" /> Python</label>
+          <label><input type="checkbox" name="languages" value="typescript" data-testid="checkbox-typescript" /> TypeScript</label>
+          <label><input type="checkbox" name="languages" value="javascript" data-testid="checkbox-javascript" /> JavaScript</label>
+          <label><input type="checkbox" name="languages" value="ruby" data-testid="checkbox-ruby" /> Ruby</label>
+          <label><input type="checkbox" name="languages" value="csharp" data-testid="checkbox-csharp" /> C#</label>
+          <label><input type="checkbox" name="languages" value="dotnet" data-testid="checkbox-dotnet" /> .NET</label>
+          <label><input type="checkbox" name="languages" value="cplusplus" data-testid="checkbox-cplusplus" /> C++</label>
+          <label><input type="checkbox" name="languages" value="html" data-testid="checkbox-html" /> HTML</label>
+          <label><input type="checkbox" name="languages" value="c" data-testid="checkbox-c" /> C</label>
+        </fieldset>
+
+        <div>
+          <label for="country">Country (single select)</label>
+          <select id="country" name="country" data-testid="select-country">
+            <option value="">-- Select a country --</option>
+            <option value="us">United States</option>
+            <option value="in">India</option>
+            <option value="uk">United Kingdom</option>
+            <option value="ca">Canada</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="skills">Skills (multi-select)</label>
+          <select id="skills" name="skills" multiple size="4" data-testid="select-skills">
+            <option value="playwright">Playwright</option>
+            <option value="selenium">Selenium</option>
+            <option value="typescript">TypeScript</option>
+            <option value="python">Python</option>
+            <option value="java">Java</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="avatar">Upload Avatar (single file)</label>
+          <input type="file" id="avatar" name="avatar" accept="image/*" data-testid="input-file-single" />
+        </div>
+
+        <div>
+          <label for="hiddenField">Hidden Field (not visible, has a value)</label>
+          <input type="hidden" id="hiddenField" name="hiddenField" value="secret-value" data-testid="input-hidden" />
+        </div>
+
+        <div>
+          <label for="disabledField">Disabled Field</label>
+          <input type="text" id="disabledField" name="disabledField" value="Cannot edit this" disabled data-testid="input-disabled" />
+        </div>
+
+        <div>
+          <label for="readonlyField">Readonly Field</label>
+          <input type="text" id="readonlyField" name="readonlyField" value="Readonly value" readonly data-testid="input-readonly" />
+        </div>
+
+        <div>
+          <label for="requiredField">Required Field (validation practice)</label>
+          <input type="text" id="requiredField" name="requiredField" placeholder="This field is required" required data-testid="input-required" />
+        </div>
+
+        <div style="margin-top: 1rem;">
+          <button type="submit" data-testid="btn-submit-form" title="Submit the form">Submit</button>
+          <button type="reset" data-testid="btn-reset-form" title="Reset the form">Reset</button>
+          <button type="button" id="asyncActionBtn" data-testid="btn-async-action" title="Triggers an async action">Trigger Async Action</button>
+          <button type="button" disabled data-testid="btn-disabled" title="This button is disabled">Disabled Button</button>
+        </div>
+
+        <p id="asyncActionResult" data-testid="async-action-result" aria-live="polite"></p>
+        <p id="formSubmitResult" data-testid="form-submit-result" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>Contenteditable &amp; Rich Elements</h2>
+      <label for="editableDiv">Editable Div (contenteditable)</label>
+      <div id="editableDiv" contenteditable="true" data-testid="contenteditable-div"
+           style="border:1px solid var(--border); border-radius: 6px; padding: 0.65rem; min-height: 60px;">
+        Click here and start typing. This div is directly editable.
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Address &amp; Location Detection</h2>
+      <p style="margin-top:-0.5rem; color: var(--text-muted); font-size: 0.85rem;">
+        Select a Country to auto-populate State/City and the phone prefix, or type a PIN/ZIP code to auto-detect
+        Country, State and City.
+      </p>
+      <div class="grid">
+        <div>
+          <label for="addrCountry">Country</label>
+          <select id="addrCountry" name="addrCountry" data-testid="select-addr-country">
+            <option value="">-- Select a country --</option>
+          </select>
+        </div>
+        <div>
+          <label for="addrState">State</label>
+          <select id="addrState" name="addrState" data-testid="select-addr-state" disabled>
+            <option value="">-- Select a state --</option>
+          </select>
+        </div>
+        <div>
+          <label for="addrCity">City</label>
+          <select id="addrCity" name="addrCity" data-testid="select-addr-city" disabled>
+            <option value="">-- Select a city --</option>
+          </select>
+        </div>
+        <div>
+          <label for="addrPincode">PIN / ZIP Code</label>
+          <input type="number" id="addrPincode" name="addrPincode" placeholder="e.g. 400001" data-testid="input-addr-pincode" />
+        </div>
+        <div>
+          <label for="phonePrefix">Phone Prefix (auto-selected)</label>
+          <input type="text" id="phonePrefix" name="phonePrefix" data-testid="input-phone-prefix" readonly placeholder="e.g. +91" />
+        </div>
+      </div>
+      <p id="addrDetectResult" data-testid="addr-detect-result" aria-live="polite"></p>
+    </section>
+
+    <section class="card" id="ajaxComponentsCard" data-testid="ajax-components-card">
+      <h2>AJAX-Style Components</h2>
+      <p style="margin-top:-0.5rem; color: var(--text-muted); font-size: 0.85rem;">
+        These components simulate real-world asynchronous (AJAX) behaviour - a network-style delay, a visible
+        loading state, then a populated result - useful for practising Playwright's auto-waiting/
+        <code>waitForResponse</code>/<code>expect().toHaveText()</code> style assertions.
+      </p>
+
+      <div class="grid">
+        <div>
+          <label for="ajaxUserSelect">User Directory (AJAX-loaded dropdown)</label>
+          <select id="ajaxUserSelect" name="ajaxUserSelect" class="ajax-select" type="select-one"
+                  data-testid="select-ajax-users" aria-label="User directory dropdown" disabled>
+            <option value="">-- Click "Load Users" to fetch --</option>
+          </select>
+          <button type="button" id="loadUsersBtn" name="loadUsersBtn" class="btn btn-secondary"
+                  data-testid="btn-load-ajax-users" aria-controls="ajaxUserSelect" title="Simulates an AJAX GET request">
+            Load Users
+          </button>
+          <span id="ajaxUsersSpinner" class="spinner" data-testid="ajax-users-spinner" hidden aria-label="Loading users"></span>
+        </div>
+
+        <div>
+          <label for="ajaxSearchInput">Live AJAX Search (debounced)</label>
+          <input type="search" id="ajaxSearchInput" name="ajaxSearchInput" class="ajax-search-input"
+                 placeholder="Type a city name (e.g. Lon, Par, Tok)..." autocomplete="off"
+                 aria-describedby="ajaxSearchResults" data-testid="input-ajax-search" />
+          <div id="ajaxSearchResults" class="ajax-search-results" data-testid="ajax-search-results" aria-live="polite"></div>
+        </div>
+
+        <div>
+          <label for="ajaxWeatherCountry">Weather Lookup (fetch-on-change)</label>
+          <select id="ajaxWeatherCountry" name="ajaxWeatherCountry" class="ajax-select" type="select-one"
+                  data-testid="select-ajax-weather-country" aria-label="Weather lookup country">
+            <option value="">-- Select a country --</option>
+            <option value="in">India</option>
+            <option value="us">United States</option>
+            <option value="uk">United Kingdom</option>
+            <option value="jp">Japan</option>
+            <option value="au">Australia</option>
+          </select>
+          <div id="ajaxWeatherResult" class="ajax-weather-result" data-testid="ajax-weather-result" aria-live="polite" role="status">
+            <span class="ajax-weather-placeholder">Select a country to fetch weather...</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card" id="bootstrapDropdownsCard" data-testid="bootstrap-dropdowns-card">
+      <h2>Bootstrap-Style Dropdowns</h2>
+      <p style="margin-top:-0.5rem; color: var(--text-muted); font-size: 0.85rem;">
+        Classic Bootstrap <code>.dropdown</code> / <code>.dropdown-toggle</code> / <code>.dropdown-menu</code> /
+        <code>.dropdown-item</code> markup (no Bootstrap JS bundle required - toggled here with a small local
+        script) restyled to match this app's theme - practise clicking a toggle button, waiting for the menu to
+        become visible, then clicking a specific <code>.dropdown-item</code> by text/role/data-testid.
+      </p>
+
+      <div class="grid">
+        <div class="dropdown" id="actionDropdown" data-testid="dropdown-action">
+          <label id="actionDropdownLabel">Action Menu</label>
+          <button type="button" id="actionDropdownToggle" name="actionDropdownToggle" class="btn dropdown-toggle"
+                  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-labelledby="actionDropdownLabel"
+                  data-testid="btn-action-dropdown-toggle">
+            Choose an Action
+          </button>
+          <ul class="dropdown-menu" id="actionDropdownMenu" role="menu" aria-labelledby="actionDropdownToggle" data-testid="menu-action-dropdown" hidden>
+            <li role="none"><button type="button" class="dropdown-item" role="menuitem" data-value="edit" id="actionItemEdit" data-testid="dropdown-item-edit">✏️ Edit</button></li>
+            <li role="none"><button type="button" class="dropdown-item" role="menuitem" data-value="duplicate" id="actionItemDuplicate" data-testid="dropdown-item-duplicate">📄 Duplicate</button></li>
+            <li role="separator" class="dropdown-divider"></li>
+            <li role="none"><button type="button" class="dropdown-item" role="menuitem" data-value="archive" id="actionItemArchive" data-testid="dropdown-item-archive">📦 Archive</button></li>
+            <li role="none"><button type="button" class="dropdown-item dropdown-item-danger" role="menuitem" data-value="delete" id="actionItemDelete" data-testid="dropdown-item-delete">🗑️ Delete</button></li>
+          </ul>
+          <p id="actionDropdownResult" data-testid="action-dropdown-result" aria-live="polite"></p>
+        </div>
+
+        <div class="dropdown" id="languageDropdown" data-testid="dropdown-language">
+          <label id="languageDropdownLabel">Preferred Language (single-select)</label>
+          <button type="button" id="languageDropdownToggle" name="languageDropdownToggle" class="btn btn-secondary dropdown-toggle"
+                  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-labelledby="languageDropdownLabel"
+                  data-testid="btn-language-dropdown-toggle">
+            -- Select a language --
+          </button>
+          <ul class="dropdown-menu" id="languageDropdownMenu" role="menu" aria-labelledby="languageDropdownToggle" data-testid="menu-language-dropdown" hidden>
+            <li role="none"><button type="button" class="dropdown-item" role="menuitemradio" aria-checked="false" data-value="en" id="langItemEnglish" data-testid="dropdown-item-english">English</button></li>
+            <li role="none"><button type="button" class="dropdown-item" role="menuitemradio" aria-checked="false" data-value="hi" id="langItemHindi" data-testid="dropdown-item-hindi">Hindi</button></li>
+            <li role="none"><button type="button" class="dropdown-item" role="menuitemradio" aria-checked="false" data-value="es" id="langItemSpanish" data-testid="dropdown-item-spanish">Spanish</button></li>
+            <li role="none"><button type="button" class="dropdown-item" role="menuitemradio" aria-checked="false" data-value="fr" id="langItemFrench" data-testid="dropdown-item-french">French</button></li>
+          </ul>
+          <input type="hidden" id="languageDropdownValue" name="languageDropdownValue" value="" data-testid="input-language-dropdown-value" />
+        </div>
+
+        <div class="dropdown" id="skillsDropdown" data-testid="dropdown-skills-checkbox">
+          <label id="skillsDropdownLabel">Skills Filter (multi-select checkboxes)</label>
+          <button type="button" id="skillsDropdownToggle" name="skillsDropdownToggle" class="btn btn-secondary dropdown-toggle"
+                  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-labelledby="skillsDropdownLabel"
+                  data-testid="btn-skills-dropdown-toggle">
+            0 skills selected
+          </button>
+          <ul class="dropdown-menu dropdown-menu-checklist" id="skillsDropdownMenu" role="menu" aria-labelledby="skillsDropdownToggle" data-testid="menu-skills-dropdown" hidden>
+            <li role="none"><label class="dropdown-item dropdown-item-checkbox"><input type="checkbox" name="skillsDropdownOption" value="playwright" id="skillsCheckPlaywright" data-testid="dropdown-checkbox-playwright" /> Playwright</label></li>
+            <li role="none"><label class="dropdown-item dropdown-item-checkbox"><input type="checkbox" name="skillsDropdownOption" value="selenium" id="skillsCheckSelenium" data-testid="dropdown-checkbox-selenium" /> Selenium</label></li>
+            <li role="none"><label class="dropdown-item dropdown-item-checkbox"><input type="checkbox" name="skillsDropdownOption" value="cypress" id="skillsCheckCypress" data-testid="dropdown-checkbox-cypress" /> Cypress</label></li>
+            <li role="none"><label class="dropdown-item dropdown-item-checkbox"><input type="checkbox" name="skillsDropdownOption" value="appium" id="skillsCheckAppium" data-testid="dropdown-checkbox-appium" /> Appium</label></li>
+          </ul>
+        </div>
+
+        <div class="dropdown" id="searchableDropdown" data-testid="dropdown-searchable">
+          <label id="searchableDropdownLabel" for="searchableDropdownInput">Searchable Country Dropdown</label>
+          <button type="button" id="searchableDropdownToggle" name="searchableDropdownToggle" class="btn btn-secondary dropdown-toggle"
+                  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-labelledby="searchableDropdownLabel"
+                  data-testid="btn-searchable-dropdown-toggle">
+            -- Select a country --
+          </button>
+          <div class="dropdown-menu dropdown-menu-searchable" id="searchableDropdownMenu" role="menu" aria-labelledby="searchableDropdownToggle" data-testid="menu-searchable-dropdown" hidden>
+            <input type="text" id="searchableDropdownInput" name="searchableDropdownInput" class="dropdown-search-input"
+                   placeholder="Type to filter..." autocomplete="off" data-testid="input-searchable-dropdown-filter" />
+            <ul id="searchableDropdownList" role="listbox" data-testid="list-searchable-dropdown"></ul>
+          </div>
+        </div>
+
+        <div class="dropdown" id="techStackMultiSelectWrapper" data-testid="dropdown-tech-stack-native-multiselect">
+          <label for="techStackMultiSelect" id="techStackMultiSelectLabel">Tech Stack (native multi-select - use selectOption())</label>
+          <select id="techStackMultiSelect" name="techStackMultiSelect" class="native-multiselect" type="select-multiple"
+                  multiple size="6" required aria-label="Tech stack native multi-select"
+                  aria-labelledby="techStackMultiSelectLabel" data-testid="select-tech-stack-native">
+            <option value="playwright" id="techOptPlaywright" data-testid="tech-option-playwright">Playwright</option>
+            <option value="selenium" id="techOptSelenium" data-testid="tech-option-selenium">Selenium</option>
+            <option value="cypress" id="techOptCypress" data-testid="tech-option-cypress">Cypress</option>
+            <option value="appium" id="techOptAppium" data-testid="tech-option-appium">Appium</option>
+            <option value="typescript" id="techOptTypeScript" data-testid="tech-option-typescript">TypeScript</option>
+            <option value="python" id="techOptPython" data-testid="tech-option-python">Python</option>
+            <option value="java" id="techOptJava" data-testid="tech-option-java">Java</option>
+            <option value="csharp" id="techOptCSharp" data-testid="tech-option-csharp">C#</option>
+            <!-- Duplicate options (same visible TEXT and/or same VALUE as an
+                 option above) - deliberately added for practising strict-mode
+                 locator disambiguation with duplicate <option> text/values,
+                 e.g. page.getByRole('option', { name: 'Playwright' }) would
+                 match 2 elements here, so must be scoped further (by id,
+                 data-testid, or .nth()/.first()/.last()). -->
+            <option value="playwright" id="techOptPlaywrightDup" data-testid="tech-option-playwright-dup">Playwright</option>
+            <option value="csharp" id="techOptCSharpDup" data-testid="tech-option-csharp-dup">C#</option>
+            <option value="python-duplicate-value" id="techOptPythonDup" data-testid="tech-option-python-dup">Python</option>
+          </select>
+          <p id="techStackMultiSelectResult" data-testid="tech-stack-multiselect-result" aria-live="polite"></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card" id="hiddenDropdownsCard" data-testid="hidden-dropdowns-card">
+      <h2>Job Title Dropdown (DOM-Injected, Focus-to-Close)</h2>
+      <p style="margin-top:-0.5rem; color: var(--text-muted); font-size: 0.85rem;">
+        An OrangeHRM-style <code>div</code>/<code>span</code>-based dropdown (like
+        <code>div.oxd-select-wrapper</code> &rarr; <code>div.oxd-select-dropdown</code> &rarr;
+        <code>div.oxd-select-option</code>) whose option list does NOT exist anywhere in the page's
+        initial HTML. It is created and appended to the DOM ONLY at the moment you click the toggle,
+        and is removed from the DOM again when an option is selected, when you click outside the
+        dropdown, on Escape, or the moment the page/window loses focus (<code>blur</code> - e.g.
+        right-clicking to open the browser context menu, or DevTools stealing focus via
+        F12/Inspect). Because a normal right-click &rarr; "Inspect" triggers that <code>blur</code>
+        event, the option list is removed from the DOM before DevTools can select it in the Elements
+        panel. To inspect its real markup, first run the Chrome DevTools command menu
+        (<code>Ctrl+Shift+P</code>) &rarr; "Emulate a focused page" BEFORE opening the dropdown -
+        this suppresses the <code>blur</code> event so the page keeps believing it never lost focus,
+        letting the option list survive long enough in the DOM to inspect normally.
+
+      </p>
+
+
+      <div class="grid">
+        <div class="oxd-select-wrapper" id="jobTitleDropdownWrapper" data-testid="dropdown-job-title-wrapper">
+          <label id="jobTitleDropdownLabel">Job Title</label>
+          <div class="oxd-select-text" id="jobTitleDropdownToggle" tabindex="0" role="button"
+               aria-haspopup="listbox" aria-expanded="false" aria-labelledby="jobTitleDropdownLabel"
+               data-testid="btn-job-title-dropdown-toggle">
+            <div class="oxd-select-text-input">-- Select Job Title --</div>
+            <div class="oxd-select-text-after"><i class="oxd-select-text-arrow"></i></div>
+          </div>
+          <!-- Intentionally NO div.oxd-select-dropdown here in the static markup.
+               forms.ts dynamically creates and appends/removes it on open/close so that
+               the div/span option elements never sit in the DOM at rest - only while the
+               dropdown is actually open. -->
+          <input type="hidden" id="jobTitleDropdownValue" name="jobTitleDropdownValue" value="" data-testid="input-job-title-dropdown-value" />
+        </div>
+      </div>
+    </section>
+  </main>
+
+
+  <footer class="app-footer">Playwright Practice App &mdash; for local training use only.</footer>
+  <script type="module" src="../ts/common.js"></script>
+  <script type="module" src="../ts/forms.js"></script>
+</body>
+</html>

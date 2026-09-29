@@ -1,0 +1,8 @@
+{
+  "sampleData": true,
+  "items": [
+    { "id": 1, "name": "Sample Item One" },
+    { "id": 2, "name": "Sample Item Two" }
+  ],
+  "generatedFor": "Playwright download practice"
+}

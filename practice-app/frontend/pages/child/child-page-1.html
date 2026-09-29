@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Child Page 1 - Playwright Practice App</title>
+  <link rel="stylesheet" href="../../css/styles.css" />
+</head>
+<body>
+  <header class="app-header"><h1>🎭 Playwright Practice App</h1></header>
+  <nav class="main-nav" aria-label="Main navigation">
+    <a href="../index.html">Home</a>
+    <a href="../forms.html">Forms</a>
+    <a href="../tables.html">Tables</a>
+    <a href="../popups.html">Popups &amp; Dialogs</a>
+    <a href="../iframes.html">iFrames</a>
+    <a href="../dynamic.html">Dynamic Content</a>
+    <a href="../shadow-dom.html">Shadow DOM</a>
+    <a href="../locators.html">Locator Playground</a>
+    <a href="../file-upload.html">Files</a>
+    <a href="child-page-1.html" aria-current="page">Child Pages</a>
+    <a href="../api-playground.html">API Playground</a>
+  </nav>
+
+  <main class="container">
+    <section class="card">
+      <h2 data-testid="child-page-1-heading">Child Page 1</h2>
+      <p>This is a child page reached by navigating from the parent Home page (opens in a new tab).</p>
+      <a href="child-page-2.html" data-testid="link-to-child-2">Go to Child Page 2 &rarr;</a>
+      <br /><br />
+      <a href="../index.html" data-testid="link-back-to-parent">&larr; Back to Parent (Home)</a>
+    </section>
+
+    <section class="card">
+      <h2>Loading Spinner</h2>
+      <button id="childSpinnerBtn" data-testid="child-spinner-btn">Start Loading</button>
+      <div id="childSpinnerContainer" data-testid="child-spinner-container"></div>
+    </section>
+
+    <section class="card">
+      <h2>Calendar (Date Picker)</h2>
+      <label for="childDatePicker">Pick a date</label>
+      <input type="date" id="childDatePicker" data-testid="child-date-picker" />
+    </section>
+
+    <section class="card">
+      <h2>Slider / Range Input</h2>
+      <label for="childSlider">Adjust volume</label>
+      <input type="range" id="childSlider" min="0" max="100" value="40" data-testid="child-slider" />
+      <span id="childSliderValue" data-testid="child-slider-value">40</span>
+    </section>
+
+    <section class="card">
+      <h2>Dropdown (Select)</h2>
+      <label for="childDropdown">Choose a fruit</label>
+      <select id="childDropdown" data-testid="child-dropdown">
+        <option value="">-- Select --</option>
+        <option value="apple">Apple</option>
+        <option value="banana">Banana</option>
+        <option value="cherry">Cherry</option>
+        <option value="mango">Mango</option>
+      </select>
+    </section>
+
+    <section class="card">
+      <h2>Radio Buttons</h2>
+      <fieldset>
+        <legend>Pick a plan</legend>
+        <label><input type="radio" name="childPlan" value="basic" data-testid="child-radio-basic" /> Basic</label>
+        <label><input type="radio" name="childPlan" value="pro" data-testid="child-radio-pro" /> Pro</label>
+        <label><input type="radio" name="childPlan" value="enterprise" data-testid="child-radio-enterprise" /> Enterprise</label>
+      </fieldset>
+    </section>
+
+    <section class="card">
+      <h2>Built-in Locator Practice Elements</h2>
+      <button role="button" data-testid="child-role-btn">getByRole button</button>
+      <p data-testid="child-text-el">Unique child-page text for getByText practice</p>
+      <label for="childLabelInput">Label for getByLabel</label>
+      <input type="text" id="childLabelInput" data-testid="child-label-input" />
+      <input type="text" placeholder="getByPlaceholder practice" data-testid="child-placeholder-input" />
+      <img src="https://picsum.photos/seed/child/80/50" alt="Child page alt text practice" data-testid="child-alt-image" />
+      <button title="Tooltip for getByTitle practice" data-testid="child-title-btn">Hover for title</button>
+    </section>
+
+    <section class="card">
+      <h2>🌈 Rainbow Buttons</h2>
+      <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+        <button data-testid="rainbow-btn-red" style="background:#ef4444;">Red</button>
+        <button data-testid="rainbow-btn-orange" style="background:#f97316;">Orange</button>
+        <button data-testid="rainbow-btn-yellow" style="background:#eab308; color:#1e293b;">Yellow</button>
+        <button data-testid="rainbow-btn-green" style="background:#22c55e;">Green</button>
+        <button data-testid="rainbow-btn-blue" style="background:#3b82f6;">Blue</button>
+        <button data-testid="rainbow-btn-indigo" style="background:#6366f1;">Indigo</button>
+        <button data-testid="rainbow-btn-violet" style="background:#8b5cf6;">Violet</button>
+      </div>
+      <p id="rainbowResult" data-testid="rainbow-result"></p>
+    </section>
+
+    <section class="card">
+      <h2>🔊 Sound Mute/Unmute Button</h2>
+      <button id="muteToggleBtn" data-testid="mute-toggle-btn" aria-pressed="false">🔊 Unmuted</button>
+    </section>
+  </main>
+  <footer class="app-footer">Playwright Practice App &mdash; for local training use only.</footer>
+  <script type="module" src="../../ts/child-page.js"></script>
+</body>
+</html>
