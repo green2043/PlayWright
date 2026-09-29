@@ -1,4 +1,6 @@
 // @ts-check
+/// <reference types="node" />
+
 import { defineConfig, devices } from '@playwright/test';
 
 /**
@@ -25,10 +27,19 @@ export default defineConfig({
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
+  
+    webServer: {
+    command: 'npm start --prefix ./practice-app',
+    url: 'http://localhost:3000',
+    reuseExistingServer: true,
+  },
+
   use: {
     /* Base URL to use in actions like `await page.goto('')`. */
     // baseURL: 'http://localhost:3000',
     headless : false,
+     screenshot: 'on',
+     video: 'on',
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
     testIdAttribute : /*'data-qa',*/  'data-testid'   //configured data-testid

@@ -1,5 +1,5 @@
 {
-  "name": "satyaws",
+  "name": "playwrightws",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,6 +10,6 @@
   "type": "commonjs",
   "devDependencies": {
     "@playwright/test": "^1.61.1",
-    "@types/node": "^26.1.1"
+    "@types/node": "^26.6.3"
   }
 }

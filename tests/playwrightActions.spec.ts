@@ -8,7 +8,7 @@ import{test,expect,Locator} from "@playwright/test";
 //Text input/ Text Box/ Input Box
 test("test input actions for text box in playwright",async({page})=>{
 
-    await page.goto("http://127.0.0.1:5500/practice-app/frontend/pages/forms.html");
+    await page.goto("http://localhost:3000/pages/forms.html");
 
     const textBox:Locator= page.locator("#fullName");
     await textBox.fill("Satya"); // Fill the text box with the value "Satya", fil() is an action method
@@ -36,7 +36,7 @@ test("test input actions for text box in playwright",async({page})=>{
 test("test input actions for radio  buttons in playwright",async({page})=>{
 // test.only("test input actions for radio  buttons in playwright",async({page})=>{  //here .only is used to run only this test and ignore all other tests in the file
 
-    await page.goto("http://127.0.0.1:5500/practice-app/frontend/pages/forms.html");
+    await page.goto("http://localhost:3000/pages/forms.html");
 
     const maleradioButton:Locator=  page.getByTestId('radio-male'); //getByTestId() is a playwright specific locator, it is used to locate elements by their data-testid attribute
     expect(await maleradioButton.isChecked()).toBe(false);
@@ -54,7 +54,7 @@ test("test input actions for radio  buttons in playwright",async({page})=>{
 
 test.only("checkbox actions", async ({page})=>{
 
-    await page.goto("http://127.0.0.1:5500/practice-app/frontend/pages/forms.html");
+    await page.goto("http://localhost:3000/pages/forms.html");
 
     //1.select specific checkbox using getByLabel() and assert
     const codingCheckBox:Locator = page.getByLabel("Coding",{exact:true}); //exact:true means the label text should match exactly

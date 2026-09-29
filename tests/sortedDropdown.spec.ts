@@ -3,7 +3,7 @@ import{test, expect, Locator} from "@playwright/test";
 
 test("verify dropdown is sorted",async({page})=>{
 
-await page.goto("http://127.0.0.1:5500/practice-app/frontend/pages/forms.html");
+await page.goto("http://localhost:3000/pages/forms.html");
 
 
 //const dropdownOptions:Locator = page.locator('#addrCountry>option');
@@ -47,7 +47,7 @@ await page.waitForTimeout(5000);
 
 test.only("verify dropdown is sorted for sorted list",async({page})=>{
 
-await page.goto("http://127.0.0.1:5500/practice-app/frontend/pages/forms.html");
+await page.goto("http://localhost:3000/pages/forms.html");
 
 
 const dropdownOptions:Locator = page.locator('#addrCountry>option');
